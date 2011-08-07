@@ -44,7 +44,7 @@ h3. News:
 h3. Other Resources
 
 
-* "SwiftSuspenders (what I'm trying to figure out how to do in Lua)":http://github.com/tschneidereit/SwiftSuspenders
+* "SwiftSuspenders - what I'm trying to figure out how to do in Lua":http://github.com/tschneidereit/SwiftSuspenders
 
 h2. License
 
