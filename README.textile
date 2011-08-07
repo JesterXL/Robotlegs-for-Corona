@@ -11,12 +11,18 @@ Robotlegs enables:
 
 "Official Robotlegs Website":http://www.robotlegs.org
 
-h3. Getting Started
+h3. Getting Started With Robotlegs
 
 * "Brief Overview":http://github.com/robotlegs/robotlegs-framework/wiki/Overview
 * "Common Problems":http://github.com/robotlegs/robotlegs-framework/wiki/Common-Problems
 * "Best Practices":http://github.com/robotlegs/robotlegs-framework/wiki/Best-Practices
 * "Robotlegs Internals":http://github.com/robotlegs/robotlegs-framework/wiki/Robotlegs-Internals
+
+h3. Getting Started With Corona
+* "Brief Overview":http://www.anscamobile.com/corona/
+* "Corona FAQ":http://www.anscamobile.com/corona/faq/
+* "API's at a glance":http://developer.anscamobile.com/resources/apis
+* "Resources":http://www.anscamobile.com/resources/
 
 h3. Code
 
@@ -33,6 +39,7 @@ h3. Help, Support, Collaboration
 h3. News:
 
 * "Follow Robotlegs on Twitter":http://twitter.com/robotlegs_as3
+* "Follow Ansca, makers of Corona, on Twitter":https://twitter.com/ansca
 
 h3. Other Resources
 
