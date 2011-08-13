@@ -13,7 +13,7 @@ if(MessageBus.listeners == nil) then
 end
 
 function MessageBus:dispatch(eventObj)
-	print("MessageBus::dispatch, name: ", eventObj.name)
+	--print("MessageBus::dispatch, name: ", eventObj.name)
 	local i = 1
 	-- TODO: there was a bug in ActionScript 1's version
 	-- where this loop would screw up if a listener removed itself during

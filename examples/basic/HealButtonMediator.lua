@@ -11,7 +11,7 @@ require "PlayerModel"
 
 function new(viewInstance)
 	
-	local mediator = require("robotlegs.Mediator").new(viewInstance)
+	local mediator = require("robotlegs_Mediator").new(viewInstance)
 	mediator.superOnRegister = mediator.onRegister
 	mediator.name = "HealButtonMediator"
 	

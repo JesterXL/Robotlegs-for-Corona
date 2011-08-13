@@ -8,7 +8,7 @@
 module (..., package.seeall)
 
 function new()
-	local context = require("robotlegs.Context").new()
+	local context = require("robotlegs_Context").new()
 	context.superStartup = context.startup
 	
 	function context:startup()
@@ -20,6 +20,7 @@ function new()
 		self:mapMediator("Player", "PlayerMediator")
 		self:mapMediator("HealthBar", "HealthBarMediator")
 		self:mapMediator("HealButton", "HealButtonMediator")
+		self:mapMediator("HealthText", "HealthTextMediator")
 		
 		self:dispatch({name="startThisMug", target=self})
 	end

@@ -7,12 +7,12 @@
 
 module (..., package.seeall)
 
-require "robotlegs.globals"
-require "robotlegs.MessageBus"
+require "robotlegs_globals"
+require "robotlegs_MessageBus"
 
 function new(viewInstance)
 	assert(viewInstance ~= nil, "A Mediator class requires a viewInstance.")
-	local mediator = require("robotlegs.Actor").new()
+	local mediator = require("robotlegs_Actor").new()
 	mediator.ID = globals.getID()
 	mediator.viewInstance = viewInstance
 	

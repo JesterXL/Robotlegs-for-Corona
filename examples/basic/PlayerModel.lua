@@ -8,7 +8,7 @@
 print("PlayerModel")
 PlayerModel = {}
 PlayerModel.ID = globals:getID()
-PlayerModel.instance = require("robotlegs.Actor").new()
+PlayerModel.instance = require("robotlegs_Actor").new()
 PlayerModel.instance.hitPoints = 30
 PlayerModel.instance.maxHitPoints = 30
 
@@ -20,8 +20,9 @@ function inst:setHitPoints(value)
 	if(value == nil) then
 		return
 	end
-	value = math.floor(value, inst.maxHitPoints)
-	value = math.ceil(value, 0)
+	-- make sure we don't go below 0, or above our max
+	value = math.max(value, 0)
+	value = math.min(value, PlayerModel.instance.maxHitPoints)
 	self.hitPoints = value
 	self:dispatch({target=self, name="hitPointsChanged"})
 end

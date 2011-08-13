@@ -9,11 +9,11 @@ module (..., package.seeall)
 
 function new(viewInstance)
 	
-	local mediator = require("robotlegs.Mediator").new(viewInstance)
+	local mediator = require("robotlegs_Mediator").new(viewInstance)
 	mediator.superOnRegister = mediator.onRegister
 	
 	function mediator:onRegister()
-		--print("PlayerMediator::onRegister, viewInstance: ", viewInstance)
+		print("PlayerMediator::onRegister, viewInstance: ", viewInstance)
 		self:superOnRegister()
 		
 		viewInstance.hitPoints = PlayerModel.instance.hitPoints

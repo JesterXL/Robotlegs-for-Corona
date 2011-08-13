@@ -47,6 +47,7 @@ require "Bullet"
 require "HealthBar"
 require "MainContext"
 require "HealButton"
+require "HealthText"
 
 function addLoop(o)
 	assert(o ~= nil, "You cannot pass nil values to the game loop")
@@ -120,6 +121,9 @@ function startThisMug()
 	healthBar.x = stage.width - healthBar.width - 4
 	healthBar.y = 40
 	context:createMediator(healthBar)
+	
+	healthText = HealthText:new(stage.x + 30, stage.y + 30, "0/0")
+	context:createMediator(healthText)
 	
 	player = Player.new()
 	player.planeXTarget = stage.width / 2

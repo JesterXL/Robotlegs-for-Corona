@@ -8,7 +8,7 @@
 module (..., package.seeall)
 
 function new()
-	local command = require("robotlegs.Command").new()
+	local command = require("robotlegs_Command").new()
 	
 	function command:execute(event)
 		require("PlayerModel")

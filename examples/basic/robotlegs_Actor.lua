@@ -7,8 +7,8 @@
 
 module (..., package.seeall)
 
-require "robotlegs.globals"
-require "robotlegs.MessageBus"
+require "robotlegs_globals"
+require "robotlegs_MessageBus"
 
 function new()
 	local actor = {}
