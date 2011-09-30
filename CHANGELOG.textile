@@ -2,6 +2,8 @@ h2. Robotlegs Framework Changelog:
 
 h3. v0.2
 
+9.30.2011
+
 Updated to support packages.
 
 h3. v0.1
