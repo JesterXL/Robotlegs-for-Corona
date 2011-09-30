@@ -5,12 +5,13 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-module (..., package.seeall)
 
-require "robotlegs_globals"
-require "robotlegs_MessageBus"
+require "org.robotlegs.globals"
+require "org.robotlegs.MessageBus"
 
-function new()
+Actor = {}
+
+function Actor:new()
 	local actor = {}
 	actor.ID = globals.getID()
 	
@@ -29,3 +30,5 @@ function new()
 	
 	return actor
 end
+
+return Actor

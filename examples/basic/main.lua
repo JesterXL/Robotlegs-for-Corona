@@ -42,12 +42,13 @@ require "sprite"
 require "physics"
 require "widget"
 
-require "Player"
-require "Bullet"
-require "HealthBar"
-require "MainContext"
-require "HealButton"
-require "HealthText"
+require "com.jessewarden.robotlegs.examples.basic.views.Player"
+require "com.jessewarden.robotlegs.examples.basic.views.Bullet"
+require "com.jessewarden.robotlegs.examples.basic.views.HealthBar"
+require "com.jessewarden.robotlegs.examples.basic.views.HealButton"
+require "com.jessewarden.robotlegs.examples.basic.views.HealthText"
+
+require "com.jessewarden.robotlegs.examples.basic.BasicContext"
 
 function addLoop(o)
 	assert(o ~= nil, "You cannot pass nil values to the game loop")
@@ -112,7 +113,7 @@ function startThisMug()
 	tickers = {} -- holds those who wish to participate in the game loop
 		
 	-- First, setup your Robotlegs Context
-	context = require("MainContext").new()
+	context = BasicContext:new()
 	context:init()
 	
 	-- Second, create your View's and manually register their Mediators

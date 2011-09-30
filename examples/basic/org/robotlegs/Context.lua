@@ -5,12 +5,13 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-module (..., package.seeall)
 
-require "robotlegs_globals"
-require "robotlegs_MessageBus"
+require "org.robotlegs.globals"
+require "org.robotlegs.MessageBus"
 
-function new()
+Context = {}
+
+function Context:new()
 	local context = {}
 	context.ID = globals:getID()
 	context.commands = {}
@@ -59,7 +60,7 @@ function new()
 		assert(mediatorClassName ~= nil, "There is no Mediator class registered for this View class.")
 		--print("mediatorClassName: ", mediatorClassName)
 		if(mediatorClassName ~= nil) then
-			local mediatorClass = require(mediatorClassName).new(viewInstance)
+			local mediatorClass = require(mediatorClassName):new(viewInstance)
 			table.insert(self.mediatorInstances, mediatorClass)
 			mediatorClass:onRegister()
 			return true
@@ -105,3 +106,5 @@ function new()
 
 	return context
 end
+
+return Context

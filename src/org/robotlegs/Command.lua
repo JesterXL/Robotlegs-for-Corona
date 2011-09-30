@@ -5,13 +5,19 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-module (..., package.seeall)
+require "org.robotlegs.Actor"
 
-function new()
-	local command = require("robotlegs_Actor").new()
+Command = {}
+
+function Command:new()
+	local command = Command:new()
 	
 	function command:execute(event)
+		-- extend this, or just make sure to implement a method in your
+		-- own class like this
 	end
 
 	return command
 end
+
+return Command

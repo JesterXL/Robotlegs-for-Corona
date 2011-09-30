@@ -5,16 +5,19 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-module (..., package.seeall)
+require "com.jessewarden.robotlegs.examples.basic.models.PlayerModel"
 
-function new()
-	local command = require("robotlegs_Command").new()
+HealPlayerCommand = {}
+
+function HealPlayerCommand:new()
+	local command = {}
 	
 	function command:execute(event)
-		require("PlayerModel")
 		PlayerModel.instance:heal()
 		return true
 	end
 
 	return command
 end
+
+return HealPlayerCommand

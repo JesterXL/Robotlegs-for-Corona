@@ -5,14 +5,15 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-module (..., package.seeall)
 
-require "robotlegs_globals"
-require "robotlegs_MessageBus"
+require "org.robotlegs.globals"
+require "org.robotlegs.MessageBus"
 
-function new(viewInstance)
+Mediator = {}
+
+function Mediator:new(viewInstance)
 	assert(viewInstance ~= nil, "A Mediator class requires a viewInstance.")
-	local mediator = require("robotlegs_Actor").new()
+	local mediator = Actor:new()
 	mediator.ID = globals.getID()
 	mediator.viewInstance = viewInstance
 	
@@ -28,3 +29,5 @@ function new(viewInstance)
 	
 	return mediator
 end
+
+return Mediator

@@ -1,5 +1,9 @@
 h2. Robotlegs Framework Changelog:
 
+h3. v0.2
+
+Updated to support packages.
+
 h3. v0.1
 
 Proof-of-concept prototype with example.

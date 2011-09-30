@@ -5,11 +5,15 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-module (..., package.seeall)
+require "org.robotlegs.Mediator"
 
-function new(viewInstance)
+require "com.jessewarden.robotlegs.examples.basic.models.PlayerModel"
+
+PlayerMediator = {}
+
+function PlayerMediator:new(viewInstance)
 	
-	local mediator = require("robotlegs_Mediator").new(viewInstance)
+	local mediator = Mediator:new(viewInstance)
 	mediator.superOnRegister = mediator.onRegister
 	
 	function mediator:onRegister()
@@ -38,3 +42,5 @@ function new(viewInstance)
 	return mediator
 	
 end
+
+return PlayerMediator

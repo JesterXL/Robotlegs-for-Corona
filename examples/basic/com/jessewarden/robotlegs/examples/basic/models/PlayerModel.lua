@@ -5,10 +5,11 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-print("PlayerModel")
+require "org.robotlegs.Actor"
+
 PlayerModel = {}
 PlayerModel.ID = globals:getID()
-PlayerModel.instance = require("robotlegs_Actor").new()
+PlayerModel.instance = Actor:new()
 PlayerModel.instance.hitPoints = 30
 PlayerModel.instance.maxHitPoints = 30
 

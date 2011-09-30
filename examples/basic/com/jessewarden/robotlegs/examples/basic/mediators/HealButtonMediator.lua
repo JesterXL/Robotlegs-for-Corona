@@ -5,13 +5,15 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-module (..., package.seeall)
+require "org.robotlegs.Mediator"
 
-require "PlayerModel"
+require "com.jessewarden.robotlegs.examples.basic.models.PlayerModel"
 
-function new(viewInstance)
+HealButtonMediator = {}
+
+function HealButtonMediator:new(viewInstance)
 	
-	local mediator = require("robotlegs_Mediator").new(viewInstance)
+	local mediator = Mediator:new(viewInstance)
 	mediator.superOnRegister = mediator.onRegister
 	mediator.name = "HealButtonMediator"
 	
@@ -34,10 +36,11 @@ function new(viewInstance)
 		-- the downside is it's hard to track down who's setting your model, when, and where if you do it
 		-- this way... but certainly requires a lot less classes and wiring in your Context.
 		-- 
-		-- require "PlayerModel"
 		-- PlayerModel.instance:heal()
 	end
 	
 	return mediator
 	
 end
+
+return HealButtonMediator
