@@ -114,7 +114,7 @@ function startThisMug()
 		
 	-- First, setup your Robotlegs Context
 	context = BasicContext:new()
-	context:init()
+	context:startup()
 	
 	-- Second, create your View's and manually register their Mediators
 	-- ...yes, working on figuring out how to make this automatic vs manual mediation

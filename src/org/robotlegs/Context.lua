@@ -5,7 +5,6 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-
 require "org.robotlegs.globals"
 require "org.robotlegs.MessageBus"
 
@@ -18,21 +17,22 @@ function Context:new()
 	context.mediators = {}
 	context.mediatorInstances = {}
 	
-	function context:startup()
-		-- abstract
-	end
-	
 	function context:onHandleEvent(event)
-		--print("Context::onHandleEvent, name: ", event.name)
+		print("Context::onHandleEvent, name: ", event.name)
 		local commandClassName = context.commands[event.name]
+		print("commandClassName: ", commandClassName)
 		if(commandClassName ~= nil) then
-			local command = require(commandClassName).new()
+			local command = assert(require(commandClassName):new(), "Failed to find command: ", commandClassName)
+			print("command: ", command)
 			command:execute(event)
 		end
 	end
 	
 	function context:mapCommand(eventName, commandClass)
+		assert(eventName ~= nil, "eventName required.")
+		assert(commandClass ~= nil, "commandClass required.")
 		--print("Context::mapCommand, name: ", eventName, ", commandClass: ", commandClass)
+		assert(require(commandClass), "Could not find commandClass")
 		self.commands[eventName] = commandClass
 		MessageBus:addListener(eventName, context.onHandleEvent)
 	end
@@ -40,12 +40,19 @@ function Context:new()
 	function context:mapMediator(viewClass, mediatorClass)
 		assert(viewClass ~= nil, "viewClass cannot be nil.")
 		assert(mediatorClass ~= nil, "mediatorClass cannot be nil.")
+		assert(require(viewClass), "Could not find viewClass")
+		assert(require(mediatorClass), "Could not find mediatorClass")
 		--print("Context::mapMediator, viewClass: ", viewClass, ", mediatorClass: ", mediatorClass)
-		self.mediators[viewClass] = mediatorClass
+		-- NOTE: we're storing the actual class name, and discarding the package. This can lead to bugs,
+		-- but until we have an easier way to get package information, we have zero clue what Lua/Corona
+		-- does with our classes.
+		local className = assert(self:getClassName(viewClass), "Couldn't parse class name")
+		self.mediators[className] = mediatorClass
 		return true
 	end
 	
 	function context:unmapMediator(viewClass)
+		assert(viewClass ~= nil, "viewClass cannot be nil.")
 		--print("Context::unmapMediator, viewClass: ", viewClass)
 		assert(viewClass.classType ~= nil, "viewClass does not have a classType parameter.")
 		self.mediators[viewClass.classType] = nil
@@ -54,11 +61,12 @@ function Context:new()
 	
 	function context:createMediator(viewInstance)
 		--print("Context::createMediator, viewInstance: ", viewInstance)
-		assert(viewInstance.classType ~= nil, "viewInstance does not have a classType parameter.")
+		assert(viewInstance.classType, "viewInstance does not have a classType parameter.")
+		local className = assert(self:getClassName(viewInstance.classType), "Failed to get class name")
+		assert(_G[className], "Cannot find viewInstance class")
 		assert(self:hasCreatedMediator(viewInstance) == false, "viewInstance already has an instantiated Mediator.")
 		local mediatorClassName = self.mediators[viewInstance.classType]
-		assert(mediatorClassName ~= nil, "There is no Mediator class registered for this View class.")
-		--print("mediatorClassName: ", mediatorClassName)
+		assert(mediatorClassName, "There is no Mediator class registered for this View class.")
 		if(mediatorClassName ~= nil) then
 			local mediatorClass = require(mediatorClassName):new(viewInstance)
 			table.insert(self.mediatorInstances, mediatorClass)
@@ -100,8 +108,28 @@ function Context:new()
 		MessageBus:dispatch(eventObj)
 	end
 	
-	function context:init()
-		self:startup()
+	-- take a package and get a class name
+	function context:getClassName(classType)
+		assert(classType ~= nil, "You cannot pass a null classType")
+		local testStartIndex,testEndIndex = classType:find(".", 1, true)
+		if testStartIndex == nil then
+			return classType
+		end
+		local startIndex = 1
+		local endIndex = 1
+		local lastStartIndex = 1
+		local lastEndIndex = 1
+		while startIndex do
+			startIndex,endIndex = classType:find(".", startIndex, true)
+			if startIndex ~= nil and endIndex ~= nil then
+				lastStartIndex = startIndex
+				lastEndIndex = endIndex
+				startIndex = startIndex + 1
+				endIndex = endIndex + 1
+			end
+		end
+		local className = classType:sub(lastStartIndex + 1)
+		return className
 	end
 
 	return context

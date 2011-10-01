@@ -1,5 +1,25 @@
 h2. Robotlegs Framework Changelog:
 
+h3. v0.3
+
+October 1st, 2011
+
+Re-worked how mapping works. You must:
+- have a classType variable on your class instance. For now, it points to your class name.
+
+If you have a class:
+
+com.your.Class
+
+Then your classType should be:
+
+obj.classType = "Class"
+
+- you must pass in the entire package path to your class. Sadly, we have no way to use this currently
+as Corona doesn't seem to retain package information.
+
+self:mapMediator("com.your.Class", "com.your.ClassMediator")
+
 h3. v0.2
 
 September 30th, 2011

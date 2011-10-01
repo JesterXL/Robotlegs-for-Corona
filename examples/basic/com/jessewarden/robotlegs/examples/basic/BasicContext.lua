@@ -11,17 +11,19 @@ BasicContext = {}
 
 function BasicContext:new()
 	local context = Context:new()
-	context.superStartup = context.startup
 	
 	function context:startup()
-		self:superStartup()
 		
 		self:mapCommand("healPlayer", "com.jessewarden.robotlegs.examples.basic.commands.HealPlayerCommand")
 		
-		self:mapMediator("Player", "com.jessewarden.robotlegs.examples.basic.mediators.PlayerMediator")
-		self:mapMediator("HealthBar", "com.jessewarden.robotlegs.examples.basic.mediators.HealthBarMediator")
-		self:mapMediator("HealButton", "com.jessewarden.robotlegs.examples.basic.mediators.HealButtonMediator")
-		self:mapMediator("HealthText", "com.jessewarden.robotlegs.examples.basic.mediators.HealthTextMediator")
+		self:mapMediator("com.jessewarden.robotlegs.examples.basic.views.Player", 
+							"com.jessewarden.robotlegs.examples.basic.mediators.PlayerMediator")
+		self:mapMediator("com.jessewarden.robotlegs.examples.basic.views.HealthBar", 
+							"com.jessewarden.robotlegs.examples.basic.mediators.HealthBarMediator")
+		self:mapMediator("com.jessewarden.robotlegs.examples.basic.views.HealButton", 
+							"com.jessewarden.robotlegs.examples.basic.mediators.HealButtonMediator")
+		self:mapMediator("com.jessewarden.robotlegs.examples.basic.views.HealthText", 
+							"com.jessewarden.robotlegs.examples.basic.mediators.HealthTextMediator")
 		
 		self:dispatch({name="startThisMug", target=self})
 	end

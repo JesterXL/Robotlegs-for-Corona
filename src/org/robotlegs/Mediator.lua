@@ -8,6 +8,7 @@
 
 require "org.robotlegs.globals"
 require "org.robotlegs.MessageBus"
+require "org.robotlegs.Actor"
 
 Mediator = {}
 
