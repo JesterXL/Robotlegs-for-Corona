@@ -15,6 +15,8 @@
 	
 	NOTE: Please keep in mind since mediating views is currently manual, you are responsible for un-mediating them as well.
 	
+	1.13.2012 - updated to latest widget API and changed x and y for buttons to top and left.
+	
 	Jesse Warden
 	
 	Twitter
@@ -40,7 +42,7 @@
 
 require "sprite"
 require "physics"
-require "widget"
+widget = require "widget"
 
 require "com.jessewarden.robotlegs.examples.basic.views.Player"
 require "com.jessewarden.robotlegs.examples.basic.views.Bullet"
@@ -99,8 +101,8 @@ function onCreateBullet(event)
 		local bullet = Bullet:new(event.target.x, event.target.y, player)
 		bullet:addEventListener("removeFromGameLoop", onRemoveFromGameLoop)
 		addLoop(bullet)
-		return
 	end
+	return true
 end
 
 function startThisMug()
@@ -137,12 +139,12 @@ function startThisMug()
 	local creatBulletButton = widget.newButton
 	{
         id = "createBulletButton",
-        x = 0,
-        y = stage.height - 72,
+        left = 0,
+        top = stage.height - 72,
         label = "Create Bullet",
         onEvent = onCreateBullet
     }
-
+	
 	healButton = HealButton:new(creatBulletButton.x + creatBulletButton.width + 4, stage.height - 72)
 	context:createMediator(healButton)
 	
