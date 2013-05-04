@@ -5,18 +5,12 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-
-require "org.robotlegs.globals"
-require "org.robotlegs.MessageBus"
-require "org.robotlegs.Actor"
-
 Mediator = {}
 
-function Mediator:new(viewInstance)
-	assert(viewInstance ~= nil, "A Mediator class requires a viewInstance.")
-	local mediator = Actor:new()
-	mediator.ID = globals.getID()
-	mediator.viewInstance = viewInstance
+function Mediator:new()
+
+	local mediator = {}
+	mediator.viewInstance = nil
 	
 	function mediator:onRegister()
 	end

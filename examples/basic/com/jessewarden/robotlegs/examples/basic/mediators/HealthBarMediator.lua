@@ -12,27 +12,20 @@ require "com.jessewarden.robotlegs.examples.basic.models.PlayerModel"
 
 HealthBarMediator = {}
 
-function HealthBarMediator:new(viewInstance)
+function HealthBarMediator:new()
 	
-	local mediator = Mediator:new(viewInstance)
-	print("viewInstance: ", viewInstance, ", vs. mediator.viewInstance: ", mediator.viewInstance)
-	mediator.superOnRegister = mediator.onRegister
-	mediator.name = "HealthBarMediator"
+	local mediator = Mediator:new()
 	
 	function mediator:onRegister()
-		print("HealthBarMediator::onRegister, viewInstance: ", viewInstance)
-		self:superOnRegister()
-		
-		PlayerModel.instance:addListener("hitPointsChanged", mediator.hitPointsChanged)
-		self:hitPointsChanged()
+		Runtime:addEventListener("PlayerModel_hitPointsChanged", self)
+		self:PlayerModel_hitPointsChanged()
 	end
 	
 	function mediator:onRemove()
-		PlayerModel.instance:removeListener("hitPointsChanged", mediator.hitPointsChanged)
+		Runtime:removeEventListener("PlayerModel_hitPointsChanged", self)
 	end
 	
-	function mediator:hitPointsChanged(event)
-		print("HealthBarMediator::hitPointsChanged")
+	function mediator:PlayerModel_hitPointsChanged(event)
 		mediator.viewInstance:setHealth(PlayerModel.instance:getHitpointsPercentage())
 	end
 	

@@ -35,6 +35,8 @@ function HealthBar:new()
 		-- Wow, that was a fun hour.
 		self.healthBarForeground.x = self.healthBarBackground.x + self.healthBarForeground.xReference
 	end
+
+	Runtime:dispatchEvent({name="onRobotlegsViewCreated", target=healthBarGroup})
 	
 	return healthBarGroup
 end

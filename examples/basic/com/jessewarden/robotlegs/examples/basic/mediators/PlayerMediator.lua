@@ -11,15 +11,12 @@ require "com.jessewarden.robotlegs.examples.basic.models.PlayerModel"
 
 PlayerMediator = {}
 
-function PlayerMediator:new(viewInstance)
+function PlayerMediator:new()
 	
-	local mediator = Mediator:new(viewInstance)
-	mediator.superOnRegister = mediator.onRegister
+	local mediator = Mediator:new()
 	
 	function mediator:onRegister()
-		print("PlayerMediator::onRegister, viewInstance: ", viewInstance)
-		self:superOnRegister()
-		
+		local viewInstance = self.viewInstance
 		viewInstance.hitPoints = PlayerModel.instance.hitPoints
 		viewInstance.maxHitPoints = PlayerModel.instance.maxHitPoints
 		viewInstance:addEventListener("bulletHit", self)

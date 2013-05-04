@@ -18,14 +18,20 @@ function BasicContext:new()
 		
 		self:mapMediator("com.jessewarden.robotlegs.examples.basic.views.Player", 
 							"com.jessewarden.robotlegs.examples.basic.mediators.PlayerMediator")
+
 		self:mapMediator("com.jessewarden.robotlegs.examples.basic.views.HealthBar", 
 							"com.jessewarden.robotlegs.examples.basic.mediators.HealthBarMediator")
+
 		self:mapMediator("com.jessewarden.robotlegs.examples.basic.views.HealButton", 
 							"com.jessewarden.robotlegs.examples.basic.mediators.HealButtonMediator")
+		
 		self:mapMediator("com.jessewarden.robotlegs.examples.basic.views.HealthText", 
 							"com.jessewarden.robotlegs.examples.basic.mediators.HealthTextMediator")
 		
-		self:dispatch({name="startThisMug", target=self})
+		-- optional; you can dispatch whatever you want, but the point is, nothing in your
+		-- app should really accept user input, etc. until this event has dispatched and everything
+		-- everything is all wired up and ready to go.
+		--Runtime:dispatch({name="startThisMug", target=self})
 	end
 
 	return context

@@ -22,8 +22,10 @@ function HealButton:new(x, y)
         label = "Heal Player",
 		onPress = group.onPress
     }
-	group:insert(healButton.view)
+	group:insert(healButton)
 	group.classType = "HealButton"
+
+	Runtime:dispatchEvent({name="onRobotlegsViewCreated", target=group})
 	return group
 end
 

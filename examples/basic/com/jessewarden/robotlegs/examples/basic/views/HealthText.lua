@@ -32,6 +32,8 @@ function HealthText:new(x, y, text)
 			healthText:setTextColor(255, 255, 255)
 		end
 	end
+
+	Runtime:dispatchEvent({name="onRobotlegsViewCreated", target=healthText})
 	
 	return healthText
 end

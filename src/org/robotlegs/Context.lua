@@ -19,7 +19,7 @@ function Context:new()
 	end
 
 	function context:onRobotlegsViewCreated(event)
-		print("Context::onRobotlegsViewCreated")
+		--print("Context::onRobotlegsViewCreated")
 		local view = event.target
 		if view == nil then
 			error("ERROR: Robotlegs Context received a create event, but no view instance in the event object.")
@@ -28,7 +28,7 @@ function Context:new()
 	end
 
 	function context:onRobotlegsViewDestroyed(event)
-		print("Context::onRobotlegsViewDestroyed")
+		--print("Context::onRobotlegsViewDestroyed")
 		local view = event.target
 		if view == nil then
 			error("ERROR: Robotlegs Context received a destroyed event, but no view instance in the event object.")

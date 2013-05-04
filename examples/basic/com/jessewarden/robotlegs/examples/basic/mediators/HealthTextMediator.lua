@@ -11,27 +11,20 @@ require "com.jessewarden.robotlegs.examples.basic.models.PlayerModel"
 
 HealthTextMediator = {}
 
-function HealthTextMediator:new(viewInstance)
+function HealthTextMediator:new()
 	
-	local mediator = Mediator:new(viewInstance)
-	--print("viewInstance: ", viewInstance, ", vs. mediator.viewInstance: ", mediator.viewInstance)
-	mediator.superOnRegister = mediator.onRegister
-	mediator.name = "HealthTextMediator"
-	
+	local mediator = Mediator:new()
+
 	function mediator:onRegister()
-		print("HealthTextMediator::onRegister, viewInstance: ", viewInstance)
-		self:superOnRegister()
-		
-		PlayerModel.instance:addListener("hitPointsChanged", mediator.hitPointsChanged)
-		self:hitPointsChanged()
+		Runtime:addEventListener("PlayerModel_hitPointsChanged", self)
+		self:PlayerModel_hitPointsChanged()
 	end
 	
 	function mediator:onRemove()
-		PlayerModel.instance:removeListener("hitPointsChanged", mediator.hitPointsChanged)
+		Runtime:removeEventListener("PlayerModel_hitPointsChanged", self)
 	end
 	
-	function mediator:hitPointsChanged(event)
-		print("HealthTextMediator::hitPointsChanged")
+	function mediator:PlayerModel_hitPointsChanged(event)
 		mediator.viewInstance:showHitPoints(PlayerModel.instance.hitPoints, PlayerModel.instance.maxHitPoints)
 	end
 	

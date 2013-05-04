@@ -65,6 +65,8 @@ function Player:new()
 			end
 		end	
 	end
+
+	Runtime:dispatchEvent({name="onRobotlegsViewCreated", target=img})
 	
 	return img
 end

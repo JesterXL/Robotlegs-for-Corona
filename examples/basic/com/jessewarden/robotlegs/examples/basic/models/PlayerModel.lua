@@ -5,11 +5,8 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-require "org.robotlegs.Actor"
-
 PlayerModel = {}
-PlayerModel.ID = globals:getID()
-PlayerModel.instance = Actor:new()
+PlayerModel.instance = {}
 PlayerModel.instance.hitPoints = 30
 PlayerModel.instance.maxHitPoints = 30
 
@@ -25,7 +22,7 @@ function inst:setHitPoints(value)
 	value = math.max(value, 0)
 	value = math.min(value, PlayerModel.instance.maxHitPoints)
 	self.hitPoints = value
-	self:dispatch({target=self, name="hitPointsChanged"})
+	Runtime:dispatchEvent({target=self, name="PlayerModel_hitPointsChanged"})
 end
 
 function inst:getHitpointsPercentage()

@@ -9,25 +9,25 @@
 Bullet = {}
 
 function Bullet:new(startX, startY, targetPoint)
-	local img = display.newImage("bullet.png")
-	img.name = "Bullet"
-	img.speed = 6
-	img.x = startX
-	img.y = startY
-	img.targetX = targetPoint.x
-	img.targetY = targetPoint.y
+	local bullet = display.newImage("bullet.png")
+	bullet.name = "Bullet"
+	bullet.speed = 6
+	bullet.x = startX
+	bullet.y = startY
+	bullet.targetX = targetPoint.x
+	bullet.targetY = targetPoint.y
 	-- TODO: use math.deg vs. manual conversion
-	img.rot = math.atan2(img.y -  img.targetY,  img.x - img.targetX) / math.pi * 180 -90;
-	img.angle = (img.rot -90) * math.pi / 180;
+	bullet.rot = math.atan2(bullet.y -  bullet.targetY,  bullet.x - bullet.targetX) / math.pi * 180 -90;
+	bullet.angle = (bullet.rot -90) * math.pi / 180;
 	
-	physics.addBody( img, { density = 1.0, friction = 0.3, bounce = 0.2, 
+	physics.addBody( bullet, { density = 1.0, friction = 0.3, bounce = 0.2, 
 								bodyType = "kinematic", 
 								isBullet = true, isSensor = true, isFixedRotation = true,
 								filter = { categoryBits = 8, maskBits = 1 }
 							} )
 								
 	
-	function onHit(self, event)
+	function bullet:collision(event)
 		if(event.other.name == "Player") then
 			-- TODO: watch this; not sure which instance it's talking too
 			event.other:onBulletHit()
@@ -35,15 +35,15 @@ function Bullet:new(startX, startY, targetPoint)
 		end
 	end
 
-	img.collision = onHit
-	img:addEventListener("collision", img)
+	bullet:addEventListener("collision", bullet)
 	
-	function img:destroy()
+	function bullet:destroy()
+		self:removeEventListener("collision", self)
 		self:dispatchEvent({name="removeFromGameLoop", target=self})
 		self:removeSelf()
 	end
 	
-	function img:tick(millisecondsPassed)
+	function bullet:tick(millisecondsPassed)
 		-- TODO: make sure using milliseconds vs. hardcoding step speed
 		self.x = self.x + math.cos(self.angle) * self.speed
 	   	self.y = self.y + math.sin(self.angle) * self.speed
@@ -52,7 +52,7 @@ function Bullet:new(startX, startY, targetPoint)
 		end
 	end
 	
-	return img
+	return bullet
 end
 
 return Bullet

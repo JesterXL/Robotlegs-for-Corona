@@ -15,6 +15,8 @@
 	
 	NOTE: Please keep in mind since mediating views is currently manual, you are responsible for un-mediating them as well.
 	
+	5.4.2013 - updated to simplified Robotlegs API and latest v2 Widgets.
+
 	1.13.2012 - updated to latest widget API and changed x and y for buttons to top and left.
 	
 	Jesse Warden
@@ -30,7 +32,6 @@
 	Web
 		http://jessewarden.com
 		http://webappsolution.com
-	
 	
 
 	Copyright (c) 2011 the original author or authors
@@ -97,7 +98,7 @@ function onTouch(event)
 end
 
 function onCreateBullet(event)
-	if(event.phase == "release") then
+	if event.phase == "ended" then
 		local bullet = Bullet:new(event.target.x, event.target.y, player)
 		bullet:addEventListener("removeFromGameLoop", onRemoveFromGameLoop)
 		addLoop(bullet)
@@ -123,10 +124,8 @@ function startThisMug()
 	healthBar = HealthBar:new()
 	healthBar.x = stage.width - healthBar.width - 4
 	healthBar.y = 40
-	context:createMediator(healthBar)
 	
 	healthText = HealthText:new(stage.x + 30, stage.y + 30, "0/0")
-	context:createMediator(healthText)
 	
 	player = Player.new()
 	player.planeXTarget = stage.width / 2
@@ -134,19 +133,19 @@ function startThisMug()
 	player.x = player.planeXTarget
 	player.y = player.planeYTarget
 	addLoop(player)
-	context:createMediator(player)
 	
 	local creatBulletButton = widget.newButton
 	{
         id = "createBulletButton",
         left = 0,
         top = stage.height - 72,
+        width=160,
         label = "Create Bullet",
         onEvent = onCreateBullet
     }
+    creatBulletButton:setReferencePoint(display.TopLeftReferencePoint)
 	
 	healButton = HealButton:new(creatBulletButton.x + creatBulletButton.width + 4, stage.height - 72)
-	context:createMediator(healButton)
 	
 	local planeRect = display.newRect(0, 0, stage.width, stage.height - (stage.height - creatBulletButton.y))
 	planeRect.strokeWidth = 3
