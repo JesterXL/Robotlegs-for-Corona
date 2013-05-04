@@ -5,12 +5,11 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-require "org.robotlegs.Actor"
-
 Command = {}
 
 function Command:new()
-	local command = Command:new()
+	local command = {}
+	command.context = nil -- this'll be the Context that created you
 	
 	function command:execute(event)
 		-- extend this, or just make sure to implement a method in your

@@ -5,25 +5,45 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-require "org.robotlegs.globals"
-require "org.robotlegs.MessageBus"
-
 Context = {}
 
 function Context:new()
 	local context = {}
-	context.ID = globals:getID()
 	context.commands = {}
 	context.mediators = {}
 	context.mediatorInstances = {}
 	
+	function context:init()
+		Runtime:addEventListener("onRobotlegsViewCreated", self)
+		Runtime:addEventListener("onRobotlegsViewDestroyed", self)
+	end
+
+	function context:onRobotlegsViewCreated(event)
+		print("Context::onRobotlegsViewCreated")
+		local view = event.target
+		if view == nil then
+			error("ERROR: Robotlegs Context received a create event, but no view instance in the event object.")
+		end
+		self:createMediator(view)
+	end
+
+	function context:onRobotlegsViewDestroyed(event)
+		print("Context::onRobotlegsViewDestroyed")
+		local view = event.target
+		if view == nil then
+			error("ERROR: Robotlegs Context received a destroyed event, but no view instance in the event object.")
+		end
+		self:removeMediator(view)
+	end
+
 	function context:onHandleEvent(event)
-		print("Context::onHandleEvent, name: ", event.name)
+		--print("Context::onHandleEvent, name: ", event.name)
 		local commandClassName = context.commands[event.name]
-		print("commandClassName: ", commandClassName)
+		--print("commandClassName: ", commandClassName)
 		if(commandClassName ~= nil) then
 			local command = assert(require(commandClassName):new(), "Failed to find command: ", commandClassName)
-			print("command: ", command)
+			--print("command: ", command)
+			command.context = self
 			command:execute(event)
 		end
 	end
@@ -34,7 +54,7 @@ function Context:new()
 		--print("Context::mapCommand, name: ", eventName, ", commandClass: ", commandClass)
 		assert(require(commandClass), "Could not find commandClass")
 		self.commands[eventName] = commandClass
-		MessageBus:addListener(eventName, context.onHandleEvent)
+		Runtime:addEventListener(eventName, function(e)context:onHandleEvent(e)end)
 	end
 	
 	function context:mapMediator(viewClass, mediatorClass)
@@ -68,7 +88,8 @@ function Context:new()
 		local mediatorClassName = self.mediators[viewInstance.classType]
 		assert(mediatorClassName, "There is no Mediator class registered for this View class.")
 		if(mediatorClassName ~= nil) then
-			local mediatorClass = require(mediatorClassName):new(viewInstance)
+			local mediatorClass = require(mediatorClassName):new()
+			mediatorClass.viewInstance = viewInstance
 			table.insert(self.mediatorInstances, mediatorClass)
 			mediatorClass:onRegister()
 			return true
@@ -86,7 +107,8 @@ function Context:new()
 			if(mediatorInstance.viewInstance == viewInstance) then
 				mediatorInstance:onRemove()
 				mediatorInstance:destroy()
-				table.remove(self.mediatorInstances, mediatorInstance)
+				local mediatorIndex = table.indexOf(self.mediatorInstances, mediatorInstance)
+				table.remove(self.mediatorInstances, mediatorIndex)
 				return true
 			end
 		end
@@ -103,12 +125,7 @@ function Context:new()
 		return false
 	end
 	
-	function context:dispatch(eventObj)
-		--print("Context::dispatch, name: ", eventObj.name)
-		MessageBus:dispatch(eventObj)
-	end
-	
-	-- take a package and get a class name
+	-- take a package and get a clafdisss name
 	function context:getClassName(classType)
 		assert(classType ~= nil, "You cannot pass a null classType")
 		local testStartIndex,testEndIndex = classType:find(".", 1, true)
@@ -131,6 +148,8 @@ function Context:new()
 		local className = classType:sub(lastStartIndex + 1)
 		return className
 	end
+
+	context:init()
 
 	return context
 end
