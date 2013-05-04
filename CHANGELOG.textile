@@ -1,5 +1,19 @@
 h2. Robotlegs Framework Changelog:
 
+h3. v0.4
+
+May 4th, 2013
+
+- Deleted: Actor (no need for base message bus class abstract base class in all the Lua games + apps I've done. Runtime works just fine and each Lua runtime has it's own Message Bus built in. In Corona's case, this is called "Runtime". Globals is no longer needed, and MessageBus is deleted; use Runtime instead.
+- Command: removed base class, included reference to Context that created the Command.
+- Context: Added an easier way of registering View's. Regardless of where they are in the stack, simply dispatching the Robotlegs' events will allow it to have it's Mediator created/destroyed assuming it has a classType instance variable and has a Mediator registered for that classType.
+- gave proper scope in Context's onHandleEvent via closure; need to make this better than an anon-closure.
+- Mediator: Removed base class as well as require constructor param. The viewInstance is instead set upon creation.
+- Mediator: Fixed a serious memory leak with Mediators not removing themselves even if their viewInstance was gone.
+- used latest version of Robotlegs for Corona in example.
+- cleaned up code a little in example.
+- ensured widgets still work with latest SDK in example.
+
 h3. v0.3
 
 October 1st, 2011
