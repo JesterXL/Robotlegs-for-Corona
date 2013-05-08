@@ -21,7 +21,7 @@ function Player:new()
 	img:prepare("planeFly")
 	img:play()
 	img.classType = "Player" -- required for Robotlegs Mediators; convention for now for all your View classes
-	img.speed = 6 -- pixels per second
+	img.speed = 0.07 -- pixels per second
 	img.name = "Player"
 	img.maxHitPoints = 30
 	img.hitPoints = 30
@@ -53,8 +53,8 @@ function Player:new()
 			local deltaY = self.y - self.planeYTarget
 			local dist = math.sqrt((deltaX * deltaX) + (deltaY * deltaY))
 
-			local moveX = self.speed * (deltaX / dist)
-			local moveY = self.speed * (deltaY / dist)
+			local moveX = self.speed * (deltaX / dist) * millisecondsPassed
+			local moveY = self.speed * (deltaY / dist) * millisecondsPassed
 
 			if (self.speed >= dist) then
 				self.x = self.planeXTarget

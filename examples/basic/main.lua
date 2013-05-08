@@ -106,6 +106,14 @@ function onCreateBullet(event)
 	return true
 end
 
+function onPauseGame()
+	Runtime:removeEventListener("enterFrame", animate)
+end
+
+function onUnpause()
+	Runtime:addEventListener("enterFrame", animate)
+end
+
 function startThisMug()
 	physics.start()
 	--physics.setDrawMode( "hybrid" )
@@ -158,6 +166,28 @@ function startThisMug()
 	
 	Runtime:addEventListener("enterFrame", animate )
 	planeRect:addEventListener("touch", onTouch)	
+
+	local pauseButton = widget.newButton
+	{
+        id = "pauseButton",
+        left = 0,
+        top = stage.height - 200,
+        width=160,
+        label = "Pause",
+        onEvent = onPauseGame
+    }
+    pauseButton:setReferencePoint(display.TopLeftReferencePoint)
+
+    local unpauseButton = widget.newButton
+	{
+        id = "unpauseButton",
+        left = 200,
+        top = stage.height - 200,
+        width=160,
+        label = "UNPause",
+        onEvent = onUnpause
+    }
+    unpauseButton:setReferencePoint(display.TopLeftReferencePoint)
 end
 
 startThisMug()
