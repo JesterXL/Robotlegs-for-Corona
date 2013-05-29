@@ -1,4 +1,5 @@
 require "vo.EmployeeVO"
+
 EmployeesModel = {}
 
 function EmployeesModel:new()
@@ -21,7 +22,21 @@ function EmployeesModel:new()
             EmployeeVO:new({ id= 11,    firstName="Nico", lastName="Ferrero",phoneNumber="508-566-6666" }),
             EmployeeVO:new({ id= 12,   firstName= "Jason",lastName="Johnston",phoneNumber="508-566-6666" })
         }
-	end	
+	end
+
+      function model:delete(employee)
+            local index = table.indexOf(self.employees, employee)
+            if index then
+                  table.remove(self.employees)
+                  Runtime:dispatchEvent({name="EmployeesModel_onChanged", 
+                                          target=self,
+                                          index=index, 
+                                          employee=employee,
+                                          kind="delete"})
+                  return true
+            end
+            return false
+      end
 
 	model:init()
 

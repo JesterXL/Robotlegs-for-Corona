@@ -15,9 +15,14 @@ function CafeTownsendContext:new()
 		self:mapMediator("views.EmployeeView",
 							"mediators.EmployeeViewMediator")
 
+		self:mapMediator("views.EditEmployeeView",
+							"mediators.EditEmployeeViewMediator")
+
 		self:mapCommand("login", "commands.LoginCommand")
 
 		self:mapCommand("startup", "commands.StartupCommand")
+
+		self:mapCommand("deleteEmployee", "commands.DeleteEmployeeCommand")
 
 		Runtime:dispatchEvent({name="startup"})
 	end	

@@ -1,7 +1,7 @@
 require "components.AutoSizeText"
-PushButton = {}
+DeleteButton = {}
 
-function PushButton:new(parentGroup, layoutWidth, layoutHeight)
+function DeleteButton:new(parentGroup, layoutWidth, layoutHeight)
 
 	if layoutWidth == nil then
 		layoutWidth = 400
@@ -19,17 +19,17 @@ function PushButton:new(parentGroup, layoutWidth, layoutHeight)
 	end
 
 	function button:init()
-		local left =  display.newImage("assets/images/push-button-left.png")
+		local left =  display.newImage("assets/images/push-button-delete-left.png")
 		left:setReferencePoint(display.TopLeftReferencePoint)
 		self:insert(left)
 		self.left = left
 
-		local center =  display.newImage("assets/images/push-button-center.png")
+		local center =  display.newImage("assets/images/push-button-delete-center.png")
 		center:setReferencePoint(display.TopLeftReferencePoint)
 		self:insert(center)
 		self.center = center
 
-		local right =  display.newImage("assets/images/push-button-right.png")
+		local right =  display.newImage("assets/images/push-button-delete-right.png")
 		right:setReferencePoint(display.TopLeftReferencePoint)
 		self:insert(right)
 		self.right = right
@@ -58,7 +58,7 @@ function PushButton:new(parentGroup, layoutWidth, layoutHeight)
 		left.y = 0
 		right.x = layoutWidth - right.width
 		right.y = 0
-		-- [jwarden 5.28.2013] What in God's name, guys... seriously...
+		-- [jwarden 5.28.2013] What in God's name, guys... seriously... ...NO SERIOUSLY, WTF
 		center:setReferencePoint(display.CenterReferencePoint)
 		center.width = layoutWidth - left.width - right.width
 		center:setReferencePoint(display.TopLeftReferencePoint)
@@ -80,13 +80,9 @@ function PushButton:new(parentGroup, layoutWidth, layoutHeight)
 		self:sizeText()
 	end
 
-	function button:getLabel()
-		return self.field:getText()
-	end
-
 	function button:touch(event)
 		if event.phase == "ended" then
-			self:dispatchEvent({name="onPushButtonTouched", target=self})
+			self:dispatchEvent({name="onDeleteButtonTouched", target=self})
 			return true
 		end
 	end
@@ -97,4 +93,4 @@ function PushButton:new(parentGroup, layoutWidth, layoutHeight)
 
 end
 
-return PushButton
+return DeleteButton

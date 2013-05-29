@@ -25,7 +25,7 @@ function LoadingView:new(parentGroup)
 		background:addEventListener("touch", background)
 		background:addEventListener("tap", background)
 
-		local box = display.newRoundedRect(self, 0, 0, 260, 160, 6)
+		local box = display.newRoundedRect(self, 0, 0, 320, 200, 6)
 		box:setReferencePoint(display.TopLeftReferencePoint)
 		box:setFillColor(100, 100, 100, 235)
 		self.box = box
@@ -57,7 +57,7 @@ function LoadingView:new(parentGroup)
 		local field = self.field
 		local spinner = self.spinner
 		box.x = stage.width / 2 - box.width / 2
-		box.y = stage.height * 0.2
+		box.y = stage.height * 0.3
 		field.x = stage.width / 2 - field.width / 2
 		field.y = box.y + box.height / 2 - field.height / 2 + 30
 		spinner.x = stage.width / 2 - spinner.width

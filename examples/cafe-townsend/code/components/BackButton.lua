@@ -1,10 +1,10 @@
 require "components.AutoSizeText"
-PushButton = {}
+BackButton = {}
 
-function PushButton:new(parentGroup, layoutWidth, layoutHeight)
+function BackButton:new(parentGroup, layoutWidth, layoutHeight)
 
 	if layoutWidth == nil then
-		layoutWidth = 400
+		layoutWidth = 128
 	end
 	if layoutHeight == nil then
 		layoutHeight = 67
@@ -19,17 +19,17 @@ function PushButton:new(parentGroup, layoutWidth, layoutHeight)
 	end
 
 	function button:init()
-		local left =  display.newImage("assets/images/push-button-left.png")
+		local left =  display.newImage("assets/images/back-button-left.png")
 		left:setReferencePoint(display.TopLeftReferencePoint)
 		self:insert(left)
 		self.left = left
 
-		local center =  display.newImage("assets/images/push-button-center.png")
+		local center =  display.newImage("assets/images/back-button-center.png")
 		center:setReferencePoint(display.TopLeftReferencePoint)
 		self:insert(center)
 		self.center = center
 
-		local right =  display.newImage("assets/images/push-button-right.png")
+		local right =  display.newImage("assets/images/back-button-right.png")
 		right:setReferencePoint(display.TopLeftReferencePoint)
 		self:insert(right)
 		self.right = right
@@ -38,7 +38,7 @@ function PushButton:new(parentGroup, layoutWidth, layoutHeight)
 		field:setTextColor(255, 255, 255)
 		field:setFontSize(28)
 		field:setAutoSize(true)
-		field:setText("Label")
+		field:setText("Back")
 		self.field = field
 
 		self:addEventListener("touch", self)
@@ -80,13 +80,9 @@ function PushButton:new(parentGroup, layoutWidth, layoutHeight)
 		self:sizeText()
 	end
 
-	function button:getLabel()
-		return self.field:getText()
-	end
-
 	function button:touch(event)
 		if event.phase == "ended" then
-			self:dispatchEvent({name="onPushButtonTouched", target=self})
+			self:dispatchEvent({name="onBackButtonTouched", target=self})
 			return true
 		end
 	end
@@ -97,4 +93,4 @@ function PushButton:new(parentGroup, layoutWidth, layoutHeight)
 
 end
 
-return PushButton
+return BackButton

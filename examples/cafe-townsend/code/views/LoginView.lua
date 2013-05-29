@@ -6,7 +6,7 @@ function LoginView:new(parentGroup)
 	local view = display.newGroup()
 	view.classType = "LoginView"
 	view.FONT_NAME = "HelveticaNeue-Bold"
-	view.FONT = native.newFont()
+	view.FONT = native.newFont(view.FONT_NAME)
 
 	if parentGroup then
 		parentGroup:insert(view)

@@ -229,6 +229,19 @@ function EmployeeView:new(parentGroup)
 		end
 	end
 
+	function view:onRowTouch(event)
+	    local phase = event.phase
+	    if phase == "tap" or phase == "release" then
+	    	local index = event.target.index
+	       	local key = tostring(index)
+	       	local employee = self.employeesHash[key]
+	       	if employee then
+	       		self:dispatchEvent({name="onViewEmployee", employee=employee})
+	       	end
+	    end
+	    return true
+	end
+
 
 	view:init()
 

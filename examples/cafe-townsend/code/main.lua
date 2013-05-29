@@ -5,6 +5,15 @@ local function bootstrap()
 	require "CafeTownsendAplication"
 	local app = CafeTownsendAplication:new()
 
+	function showProps(o)
+		print("-- showProps --")
+		print("o: ", o)
+		for key,value in pairs(o) do
+			print("key: ", key, ", value: ", value);
+		end
+		print("-- end showProps --")
+	end
+
 end
 
 local function testSpinner()
