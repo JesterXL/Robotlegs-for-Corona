@@ -12,7 +12,14 @@ function CafeTownsendContext:new()
 		self:mapMediator("views.LoadingView",
 							"mediators.LoadingViewMediator")
 
+		self:mapMediator("views.EmployeeView",
+							"mediators.EmployeeViewMediator")
+
 		self:mapCommand("login", "commands.LoginCommand")
+
+		self:mapCommand("startup", "commands.StartupCommand")
+
+		Runtime:dispatchEvent({name="startup"})
 	end	
 
 	return context

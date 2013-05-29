@@ -2,9 +2,13 @@ require "components.AutoSizeText"
 require "components.Spinner"
 LoadingView = {}
 
-function LoadingView:new()
+function LoadingView:new(parentGroup)
 	local view = display.newGroup()
 	view.classType = "LoadingView"
+
+	if parentGroup then
+		parentGroup:insert(view)
+	end
 
 	function view:init()
 		local background = display.newRect(self, 0, 0, stage.width, stage.height)

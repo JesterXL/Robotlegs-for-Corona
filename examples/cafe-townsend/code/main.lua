@@ -2,20 +2,8 @@ local function bootstrap()
 	display.setStatusBar(display.HiddenStatusBar)
 	_G.stage = display.getCurrentStage()
 
-	local background = display.newRect(0, 0, stage.width, stage.height)
-
-	require "CafeTownsendContext"
-	local context = CafeTownsendContext:new()
-	context:init()
-
-
-	require "views.LoginView"
-	local view = LoginView:new()
-	view:move(stage.width / 2 - view.width / 2, stage.height * 0.2)
-
-	require "views.LoadingView"
-	local loadingView = LoadingView:new()
-
+	require "CafeTownsendAplication"
+	local app = CafeTownsendAplication:new()
 
 end
 

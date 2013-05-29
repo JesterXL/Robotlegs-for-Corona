@@ -2,11 +2,15 @@ require "components.AutoSizeText"
 require "components.PushButton"
 LoginView = {}
 
-function LoginView:new()
+function LoginView:new(parentGroup)
 	local view = display.newGroup()
 	view.classType = "LoginView"
 	view.FONT_NAME = "HelveticaNeue-Bold"
 	view.FONT = native.newFont()
+
+	if parentGroup then
+		parentGroup:insert(view)
+	end
 
 	function view:init()
 		local titleField = AutoSizeText:new(self)
