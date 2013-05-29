@@ -13,6 +13,9 @@ local function bootstrap()
 	local view = LoginView:new()
 	view:move(stage.width / 2 - view.width / 2, stage.height * 0.2)
 
+	require "views.LoadingView"
+	local loadingView = LoadingView:new()
+
 
 end
 

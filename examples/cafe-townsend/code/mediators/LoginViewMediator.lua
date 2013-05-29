@@ -27,7 +27,7 @@ function LoginViewMediator:new()
 			return false
 		end
 
-		view:error(nil)
+		-- view:error(nil)
 
 		Runtime:dispatchEvent({name="login", username=event.username, password=event.password})
 	end

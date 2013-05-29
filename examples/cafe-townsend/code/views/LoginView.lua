@@ -124,6 +124,8 @@ function LoginView:new()
 		else
 			errorLabel.isVisible = false
 		end
+		self.usernameField.isVisible = true
+		self.passwordField.isVisible = true
 	end
 
 	function view:userInput(event)
@@ -163,6 +165,10 @@ function LoginView:new()
 	function view:dispatchLogin()
 		local usernameField = self.usernameField
 		local passwordField = self.passwordField
+		stage:setFocus(self, nil)
+		usernameField.isVisible = false
+		passwordField.isVisible = false
+
 		self:dispatchEvent({name="onLogin", username=usernameField.text, password=passwordField.text})
 	end
 

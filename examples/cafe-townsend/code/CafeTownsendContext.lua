@@ -9,6 +9,9 @@ function CafeTownsendContext:new()
 		self:mapMediator("views.LoginView",
 							"mediators.LoginViewMediator")
 
+		self:mapMediator("views.LoadingView",
+							"mediators.LoadingViewMediator")
+
 		self:mapCommand("login", "commands.LoginCommand")
 	end	
 
