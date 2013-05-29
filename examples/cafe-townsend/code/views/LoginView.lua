@@ -124,8 +124,12 @@ function LoginView:new()
 		else
 			errorLabel.isVisible = false
 		end
-		self.usernameField.isVisible = true
-		self.passwordField.isVisible = true
+		self:showTextFields(true)
+	end
+
+	function view:showTextFields(show)
+		self.usernameField.isVisible = show
+		self.passwordField.isVisible = show
 	end
 
 	function view:userInput(event)
@@ -166,10 +170,15 @@ function LoginView:new()
 		local usernameField = self.usernameField
 		local passwordField = self.passwordField
 		stage:setFocus(self, nil)
-		usernameField.isVisible = false
-		passwordField.isVisible = false
+		self:showTextFields(false)
 
 		self:dispatchEvent({name="onLogin", username=usernameField.text, password=passwordField.text})
+	end
+
+	function view:destroy()
+		Runtime:dispatchEvent({name="onRobotlegsViewDestroyed", target=self})
+		self.usernameField:removeSelf()
+		self.passwordField:removeSelf()
 	end
 
 	view:init()

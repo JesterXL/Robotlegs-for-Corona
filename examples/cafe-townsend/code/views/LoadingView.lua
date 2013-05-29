@@ -11,6 +11,15 @@ function LoadingView:new()
 		background:setReferencePoint(display.TopLeftReferencePoint)
 		background:setFillColor(100, 100, 100, 200)
 		self.background = background
+		-- [jwarden 5.29.2013] Mortal Kombat voice "MODALITY!"
+		function background:touch(e)
+			return true
+		end
+		function background:tap(e)
+			return true
+		end
+		background:addEventListener("touch", background)
+		background:addEventListener("tap", background)
 
 		local box = display.newRoundedRect(self, 0, 0, 260, 160, 6)
 		box:setReferencePoint(display.TopLeftReferencePoint)

@@ -7,6 +7,7 @@ function LoginViewMediator:new()
 		local view = self.viewInstance
 		view:addEventListener("onLogin", self)
 		Runtime:addEventListener("onLoginError", self)
+		view:showTextFields(true)
 	end
 
 	function mediator:onRemove()
