@@ -5,6 +5,7 @@ EmployeesModel = {}
 function EmployeesModel:new()
 	local model = {}
 	model.employees = nil
+      model.currentEmployee = nil
 
 	function model:init()
 		self.employees = {

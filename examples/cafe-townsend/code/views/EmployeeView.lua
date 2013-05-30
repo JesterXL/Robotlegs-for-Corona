@@ -16,6 +16,7 @@ function EmployeeView:new(parentGroup)
 	view.COLOR_TEXT = {0, 0, 0}
 	view.HEADER_TEXT_COLOR = {14, 106, 166}
 	view.HEADER_COLOR = {89, 179, 245}
+	view.destroyed = false
 
 	if parentGroup then
 		parentGroup:insert(view)
@@ -123,7 +124,7 @@ function EmployeeView:new(parentGroup)
 			end
 		end
 
-		print("after filter:", #employees)
+		-- print("after filter:", #employees)
 
 		local len = #employees
 		local localHash = {}
@@ -150,7 +151,7 @@ function EmployeeView:new(parentGroup)
 	end
 
 	function view:setEmployees(employees)
-		print("EmployeeView::setEmployees, employees:", table.maxn(employees))
+		-- print("EmployeeView::setEmployees, employees:", table.maxn(employees))
 		self.employees = employees
 		self:redraw()
 	end
@@ -195,7 +196,7 @@ function EmployeeView:new(parentGroup)
 		local lettersHash = self.lettersHash
 		local employeesHash = self.employeesHash
 		local counterIndex = 1
-		print("now sorted:", #sorted)
+		-- print("now sorted:", #sorted)
 		for l = 1, #sorted do
 			
 			local letters = sorted[l]
@@ -236,10 +237,26 @@ function EmployeeView:new(parentGroup)
 	       	local key = tostring(index)
 	       	local employee = self.employeesHash[key]
 	       	if employee then
-	       		self:dispatchEvent({name="onViewEmployee", employee=employee})
+	       		-- [jwarden 5.29.2013] KLUDGE/HACK: The table View, after getting destroyed,
+	       		-- attempts to fill it's up state, but can't, because it's dead.
+	       		-- This, folks, is why I love promises. :: Borat voice :: NOT!
+	       		
+	       		timer.performWithDelay(100, function(e)
+	       			self:dispatchEvent({name="onViewEmployee", employee=employee})
+	       		end)
 	       	end
 	    end
 	    return true
+	end
+
+	function view:destroy()
+		self.destroyed = true
+		Runtime:dispatchEvent({name="onRobotlegsViewDestroyed", target=self})
+		if self.tableView then
+			self.tableView:removeSelf()
+			self.tableView = nil
+		end
+		self:removeSelf()
 	end
 
 

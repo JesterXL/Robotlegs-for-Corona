@@ -183,6 +183,7 @@ function LoginView:new(parentGroup)
 		Runtime:dispatchEvent({name="onRobotlegsViewDestroyed", target=self})
 		self.usernameField:removeSelf()
 		self.passwordField:removeSelf()
+		self:removeSelf()
 	end
 
 	view:init()

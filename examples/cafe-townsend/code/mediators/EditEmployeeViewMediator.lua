@@ -8,6 +8,7 @@ function EditEmployeeViewMediator:new()
 		view:addEventListener("onDeleteEmployee", self)
 		view:addEventListener("onBackButtonTouched", self)
 		view:addEventListener("onSaveEmployee", self)
+		view:setEmployee(gEmployeesModel.currentEmployee)
 	end
 
 	function mediator:onRemove()

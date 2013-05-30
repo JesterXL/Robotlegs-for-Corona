@@ -44,10 +44,12 @@ function CafeTownsendApplication:new()
 			view:move(stage.width / 2 - view.width / 2, stage.height * 0.2)
 		elseif name == "employeeView" then
 			view = EmployeeView:new(self)
+		elseif name == "editEmployeeView" then
+			view = EditEmployeeView:new(self)
 		else
 			error("Unknown view: " .. name)
 		end
-		
+
 		self.currentView = view
 		self.loadingView:toFront()
 	end
