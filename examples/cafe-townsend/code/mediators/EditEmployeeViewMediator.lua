@@ -1,3 +1,4 @@
+require "vo.EmployeeVO"
 EditEmployeeViewMediator = {}
 
 function EditEmployeeViewMediator:new()
@@ -24,8 +25,20 @@ function EditEmployeeViewMediator:new()
 	end
 
 	function mediator:onSaveEmployee()
-		Runtime:dispatchEvent({name="saveEmployee", employee=self.viewInstance.employee})
+		print("EditEmployeeViewMediator::onSaveEmployee")
+		local view = self.viewInstance
+		local vo = EmployeeVO:new({id=view.employee.id,
+									firstName=view.firstInput:getText(),
+									lastName=view.lastInput:getText(),
+									phoneNumber=view.phoneInput:getText(),
+									iconURL=view:getImageFilename()})
+		Runtime:dispatchEvent({name="updateEmployee", employee=vo})
 	end
+
+	function mediator:onBackButtonTouched()
+		Runtime:dispatchEvent({name="onEditEmployeeBackButtonTouched"})
+	end
+
 
 	return mediator
 end

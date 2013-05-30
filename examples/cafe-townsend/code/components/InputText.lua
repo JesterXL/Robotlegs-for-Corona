@@ -70,6 +70,13 @@ function InputText:new(parentGroup, layoutWidth, layoutHeight, promptText)
 		end
 	end
 
+	function view:destroy()
+		self.field:removeSelf()
+		self.field = nil
+
+		self:removeSelf()
+	end
+
 	view:init()
 
 	return view

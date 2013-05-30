@@ -256,6 +256,9 @@ function EmployeeView:new(parentGroup)
 			self.tableView:removeSelf()
 			self.tableView = nil
 		end
+		self.search:destroy()
+		self.search = nil
+		
 		self:removeSelf()
 	end
 

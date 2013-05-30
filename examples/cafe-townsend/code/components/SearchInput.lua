@@ -85,6 +85,12 @@ function SearchInput:new(parentGroup)
 		return self.searchField.text
 	end
 
+	function view:destroy()
+		self.searchField:removeSelf()
+		self.searchField = nil
+		self:removeSelf()
+	end
+
 	view:init()
 
 	return view

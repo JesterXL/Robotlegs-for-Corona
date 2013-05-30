@@ -12,6 +12,14 @@ function EmployeeVO:new(params)
 		return self.firstName .. " " .. self.lastName
 	end
 
+	function vo:copyFromVO(copyVO)
+		self.id 		= copyVO
+		self.firstName	= copyVO.firstName
+		self.lastName	= copyVO.lastName
+		self.iconURL	= copyVO.iconURL
+		self.phoneNumber	= copyVO.phoneNumber
+	end
+
 	return vo
 end
 

@@ -7,13 +7,9 @@ function CafeTownsendApplicationMediator:new()
 		local view = self.viewInstance
 		Runtime:addEventListener("onLoginSuccess", self)
 		Runtime:addEventListener("onEditEmployee", self)
+		Runtime:addEventListener("onEmployeeUpdated", self)
+		Runtime:addEventListener("onEditEmployeeBackButtonTouched", self)
 		view:showView("loginView")
-	end
-
-	function mediator:onRemove()
-		local view = self.viewInstance
-		Runtime:removeEventListener("onLoginSuccess", self)
-		Runtime:removeEventListener("onEditEmployee", self)
 	end
 
 	function mediator:onLoginSuccess()
@@ -23,6 +19,14 @@ function CafeTownsendApplicationMediator:new()
 	function mediator:onEditEmployee(event)
 		gEmployeesModel.currentEmployee = event.employee
 		self.viewInstance:showView("editEmployeeView")
+	end
+
+	function mediator:onEmployeeUpdated()
+		self.viewInstance:showView("employeeView")
+	end
+
+	function mediator:onEditEmployeeBackButtonTouched()
+		self.viewInstance:showView("employeeView")
 	end
 
 	return mediator

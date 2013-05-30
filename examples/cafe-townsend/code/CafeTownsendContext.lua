@@ -29,6 +29,8 @@ function CafeTownsendContext:new()
 
 		self:mapCommand("saveEmployee", "commands.SaveEmployeeCommand")
 
+		self:mapCommand("updateEmployee", "commands.UpdateEmployeeCommand")
+
 		Runtime:dispatchEvent({name="startup"})
 	end	
 

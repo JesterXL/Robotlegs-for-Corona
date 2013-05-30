@@ -17,6 +17,15 @@ function EmployeeViewMediator:new()
 	end
 
 	function mediator:EmployeesModel_onChanged(event)
+		-- local k = event.kind
+		-- if k == "remove" then
+
+		-- elseif k == "add" then
+
+		-- elseif k == "update" then
+
+		-- end
+		-- [jwarden 5.30.2013] TODO: optimize redraw
 		self.viewInstance:setEmployees(gEmployeesModel.employees)
 	end
 

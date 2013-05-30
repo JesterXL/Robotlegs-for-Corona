@@ -71,7 +71,7 @@ function EditEmployeeView:new(parentGroup)
 		local saveButton = PushButton:new(self, 140, 67)
 		self.saveButton = saveButton
 		saveButton.x = stage.width - saveButton.width - 6
-		saveButton.y = 0
+		saveButton.y = backButton.y
 		saveButton:setLabel("Save")
 		saveButton:addEventListener("onPushButtonTouched", self)
 
@@ -116,17 +116,11 @@ function EditEmployeeView:new(parentGroup)
 		self.firstInput:setText(employee.firstName)
 		self.lastInput:setText(employee.lastName)
 		self.phoneInput:setText(employee.phoneNumber)
+		self:showPhoto(employee.iconURL)
 		self:resize()
 	end
 
 	function view:onAddTouched()
-
-		 -- media.show(media.PhotoLibrary,
-		 --        {listener=self, 
-		 --        origin = self.picture.contentBounds, 
-		 --        permittedArrowDirections = { "up", "right" } },
-		 --        {baseDir=system.TemporaryDirectory, filename="image.jpg", type="image"} )
-
 		if media.hasSource( media.Camera ) then
 			if self.menu == nil then
 				local picture = self.picture
@@ -145,57 +139,6 @@ function EditEmployeeView:new(parentGroup)
 		else
 			self:chooseExistingPhoto()
 		end
-
-		-- local function onComplete(event)
-		--    local photo = event.target
-		--    view.photo = photo
-		   
-		--    local picture = self.picture
-		--    photo.width = picture.width
-		--    photo.height = picture.height
-		--    photo.x = picture.x + photo.width / 2
-		--    photo.y = picture.y + photo.height / 2
-		--    -- local mask = graphics.newMask("assets/images/phone/photo-mask.png")
-		--    -- photo:setMask(mask)
-		--    -- photo.maskX = -4
-		--    -- photo.maskY = -4
-		-- end
-
-		-- if media.hasSource( media.Camera ) then
-		--    media.show( media.Camera, onComplete )
-		-- else
-		--    native.showAlert( "Corona", "This device does not have a camera.", { "OK" } )
-		-- end
-
-		-- local function onComplete(event)
-		--    local photo = event.target
-
-		--    print( "onComplete called ..." )
-
-		--    if photo then
-		--        print( "photo w,h = " .. photo.width .. "," .. photo.height )
-		--     end
-		-- end
-
-		-- local button = display.newRect(120,240,80,70)
-
-		-- -- Button tap listener
-		-- local function pickPhoto( event )
-
-		--     -- Note: Only use one of the media.show routines listed below
-
-		--     -- Save photo to file in Temporary directory
-		--     media.show( media.PhotoLibrary,
-		--         {listener = onComplete, origin = button.contentBounds, permittedArrowDirections = { "right" } },
-		--         {baseDir=system.TemporaryDirectory, filename="image.jpg", type="image"} )
-
-		--     -- Show photo on screen (no file save)  
-		--     media.show( media.PhotoLibrary,
-		--         {listener = onComplete, origin = button.contentBounds, permittedArrowDirections = { "right" } } )
-		-- end
-
-		-- button:addEventListener("tap", pickPhoto )
-
 	end
 
 	function view:onMenuButtonTouched(event)
@@ -214,7 +157,7 @@ function EditEmployeeView:new(parentGroup)
 		        {listener=self, 
 		        origin = self.picture.contentBounds, 
 		        permittedArrowDirections = { "up", "right" } },
-		        {baseDir=system.TemporaryDirectory, filename="image.jpg", type="image"} )
+		        {baseDir=system.TemporaryDirectory, filename=self:getImageFilename(), type="image"} )
 
 	end
 
@@ -232,15 +175,34 @@ function EditEmployeeView:new(parentGroup)
 		end
 
 		if event.target == nil then
-			print("loading local")
-			self.loadedImage = display.newImage(self, "image.jpg", system.TemporaryDirectory)
-			showProps(self.loadedImage)
+			-- print("loading local")
+			-- print(self:getImageFilename())
+			self.loadedImage = display.newImage(self, self:getImageFilename(), system.TemporaryDirectory)
+			-- showProps(self.loadedImage)
 		else
-			print("using event")
+			-- print("using event")
 			self.loadedImage = event.target
-			display.save(self.loadedImage, "image.jpg")
+			display.save(self.loadedImage, self:getImageFilename())
 		end
 		self:sizePhoto()
+	end
+
+	function view:showPhoto(url)
+		if self.loadedImage then
+			self.loadedImage:removeSelf()
+		end
+		if url and url ~= "" then
+			self.loadedImage = display.newImage(self, url)
+			self:sizePhoto()
+		end
+	end
+
+	function view:getImageFilename()
+		if self.employee then
+			return self.employee.firstName .. "-" .. self.employee.lastName .. ".jpg"
+		else
+			return tostring(math.round(math.random() * 9999)) .. "image.jpg"
+		end
 	end
 
 	function view:sizePhoto()
@@ -254,6 +216,19 @@ function EditEmployeeView:new(parentGroup)
 	   -- photo:setMask(mask)
 	   -- photo.maskX = -4
 	   -- photo.maskY = -4
+	end
+
+	function view:destroy()
+		self.firstInput:destroy()
+		self.firstInput = nil
+
+		self.lastInput:destroy()
+		self.lastInput = nil
+
+		self.phoneInput:destroy()
+		self.phoneInput = nil
+
+		self:removeSelf()
 	end
 
 
