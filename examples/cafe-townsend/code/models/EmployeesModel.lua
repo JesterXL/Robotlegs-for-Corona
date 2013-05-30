@@ -7,6 +7,7 @@ function EmployeesModel:new()
 	model.employees = nil
       model.currentEmployee = nil
       model.newEmployee = nil
+      model.loaded = false
 
 	function model:init()
 		self.employees = {
