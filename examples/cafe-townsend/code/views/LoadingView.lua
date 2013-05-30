@@ -25,7 +25,7 @@ function LoadingView:new(parentGroup)
 		background:addEventListener("touch", background)
 		background:addEventListener("tap", background)
 
-		local box = display.newRoundedRect(self, 0, 0, 320, 200, 6)
+		local box = display.newRoundedRect(self, 0, 0, 340, 200, 6)
 		box:setReferencePoint(display.TopLeftReferencePoint)
 		box:setFillColor(100, 100, 100, 235)
 		self.box = box

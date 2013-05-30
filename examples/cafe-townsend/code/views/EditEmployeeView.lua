@@ -199,6 +199,7 @@ function EditEmployeeView:new(parentGroup)
 		else
 			-- print("using event")
 			self.loadedImage = event.target
+			self:insert(self.loadedImage)
 			display.save(self.loadedImage, filename)
 		end
 		self:sizePhoto()
