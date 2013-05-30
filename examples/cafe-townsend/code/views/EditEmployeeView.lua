@@ -46,14 +46,17 @@ function EditEmployeeView:new(parentGroup)
 		local firstInput = InputText:new(self, form.width - 8, 30, "First Name")
 		self.firstInput = firstInput
 		firstInput:move(form.x + 8, form.y + 4)
+		firstInput:addEventListener("userInput", self)
 
 		local lastInput = InputText:new(self, form.width - 8, 30, "Last Name")
 		self.lastInput = lastInput
 		lastInput:move(firstInput.x, firstInput.y + 43)
+		lastInput:addEventListener("userInput", self)
 
 		local phoneInput = InputText:new(self, form.width - 8, 30, "Phone")
 		self.phoneInput = phoneInput
 		phoneInput:move(lastInput.x, lastInput.y + 44)
+		phoneInput:addEventListener("userInput", self)
 
 		local deleteButton = DeleteButton:new(self, totalWidth, 67)
 		self.deleteButton = deleteButton
@@ -79,16 +82,28 @@ function EditEmployeeView:new(parentGroup)
 
 	end
 
+	function view:userInput(event)
+		local vo = self.employee
+		local t = event.target
+		if t == self.firstInput then
+			vo.firstName = self.firstInput:getText()
+		elseif t == self.lastInput then
+			vo.lastName = self.lastInput:getText()
+		elseif t == self.phoneInput then
+			vo.phoneNumber = self.phoneInput:getText()
+		end
+	end
+
 	function view:onDeleteButtonTouched()
 		if self.employee == nil then return false end
 		local employeeName = self.employee:getDisplayName()
 		native.showAlert("Delete Employee",
 							"Are you sure you wish to delete employee '" .. employeeName .. "'?",
-							{"Delete Employee", "Cancel"}, self)
+							{"Delete Employee", "Cancel"}, function(e) view:onConfirmDelete(e)end)
 		
 	end
 
-	function view:completion(event)
+	function view:onConfirmDelete(event)
 		if event.action == "clicked" and event.index == 1 then
 			self:dispatchEvent({name="onDeleteEmployee"})
 		end
@@ -174,44 +189,53 @@ function EditEmployeeView:new(parentGroup)
 			self.loadedImage:removeSelf()
 		end
 
+		local filename = self:getImageFilename()
+		-- print("filename:", filename)
 		if event.target == nil then
 			-- print("loading local")
 			-- print(self:getImageFilename())
-			self.loadedImage = display.newImage(self, self:getImageFilename(), system.TemporaryDirectory)
+			self.loadedImage = display.newImage(self, filename, system.TemporaryDirectory)
 			-- showProps(self.loadedImage)
 		else
 			-- print("using event")
 			self.loadedImage = event.target
-			display.save(self.loadedImage, self:getImageFilename())
+			display.save(self.loadedImage, filename)
 		end
 		self:sizePhoto()
 	end
 
 	function view:showPhoto(url)
+		print("EditEmployeeView::showPhoto, url: ", url)
 		if self.loadedImage then
 			self.loadedImage:removeSelf()
 		end
 		if url and url ~= "" then
 			self.loadedImage = display.newImage(self, url)
+			if self.loadedImage == nil then
+				self.loadedImage = display.newImage(self, url, system.TemporaryDirectory)
+			end
 			self:sizePhoto()
 		end
 	end
 
 	function view:getImageFilename()
-		if self.employee then
-			return self.employee.firstName .. "-" .. self.employee.lastName .. ".jpg"
+		local employee = self.employee
+		if employee.iconURL and employee.iconURL ~= "" then
+			return employee.iconURL
 		else
-			return tostring(math.round(math.random() * 9999)) .. "image.jpg"
+			return employee.firstName .. "-" .. employee.lastName .. ".jpg"
 		end
 	end
 
 	function view:sizePhoto()
 	  local picture = self.picture
 	  local photo = self.loadedImage
-	   photo.width = picture.width
-	   photo.height = picture.height
-	   photo.x = picture.x + photo.width / 2
-	   photo.y = picture.y + photo.height / 2
+	  if picture and photo then
+		   photo.width = picture.width
+		   photo.height = picture.height
+		   photo.x = picture.x + photo.width / 2
+		   photo.y = picture.y + photo.height / 2
+		end
 	   -- local mask = graphics.newMask("assets/images/phone/photo-mask.png")
 	   -- photo:setMask(mask)
 	   -- photo.maskX = -4

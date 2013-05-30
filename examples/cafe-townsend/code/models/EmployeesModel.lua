@@ -6,6 +6,7 @@ function EmployeesModel:new()
 	local model = {}
 	model.employees = nil
       model.currentEmployee = nil
+      model.newEmployee = nil
 
 	function model:init()
 		self.employees = {
@@ -35,10 +36,23 @@ function EmployeesModel:new()
             end
 	end
 
+      function model:getNewID()
+            local highest = 1
+            local employees = self.employees
+            local i
+            local len = #employees
+            for i=1,len do
+                  local vo = employees[i]
+                  highest = math.max(highest, vo.id)
+            end
+            highest = highest + 1
+            return highest
+      end
+
       function model:delete(employee)
             local index = table.indexOf(self.employees, employee)
             if index then
-                  table.remove(self.employees, employee)
+                  table.remove(self.employees, index)
                   Runtime:dispatchEvent({name="EmployeesModel_onChanged", 
                                           target=self,
                                           index=index, 
@@ -52,6 +66,7 @@ function EmployeesModel:new()
       function model:save(employee)
             local index = table.indexOf(self.employees, employee)
             if index == nil then
+                  employee.id = self:getNewID()
                   table.insert(self.employees, employee)
                   Runtime:dispatchEvent({name="EmployeesModel_onChanged", 
                                           target=self,

@@ -7,6 +7,8 @@ function EmployeeViewMediator:new()
 		Runtime:addEventListener("EmployeesModel_onChanged", self)
 		local view = self.viewInstance
 		view:addEventListener("onViewEmployee", self)
+		view:addEventListener("onLogoff", self)
+		view:addEventListener("onNewEmployee", self)
 		view:setEmployees(gEmployeesModel.employees)
 	end
 
@@ -31,6 +33,14 @@ function EmployeeViewMediator:new()
 
 	function mediator:onViewEmployee(event)
 		Runtime:dispatchEvent({name="onEditEmployee", employee=event.employee})
+	end
+
+	function mediator:onLogoff()
+		Runtime:dispatchEvent({name="onLogoff"})
+	end
+
+	function mediator:onNewEmployee()
+		Runtime:dispatchEvent({name="onCreateNewEmployee"})
 	end
 
 	return mediator

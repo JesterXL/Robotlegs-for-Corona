@@ -4,15 +4,23 @@ DeleteEmployeeCommand = {}
 
 function DeleteEmployeeCommand:new()
 	local command = {}
+	command.employee = nil
 
 	function command:execute(event)
+		print("DeleteEmployeeCommand::execute")
+		self.employee = event.employee
 		local service = DeleteEmployeeService:new()
 		service:addEventListener("onDeleteEmployeeSuccess", self)
-		service:deleteEmployee(event.employee)
+		service:deleteEmployee(self.employee)
 	end
 
 	function command:onDeleteEmployeeSuccess()
-		Runtime:dispatchEvent({name="onDeleteEmployeeSuccess"})
+		print("DeleteEmployeeCommand::onDeleteEmployeeSuccess")
+		local success = gEmployeesModel:delete(self.employee)
+		print("success:", success)
+		if success then
+			Runtime:dispatchEvent({name="onDeleteEmployeeSuccess"})
+		end
 	end
 
 	return command

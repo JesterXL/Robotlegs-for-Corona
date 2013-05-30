@@ -9,7 +9,15 @@ function EditEmployeeViewMediator:new()
 		view:addEventListener("onDeleteEmployee", self)
 		view:addEventListener("onBackButtonTouched", self)
 		view:addEventListener("onSaveEmployee", self)
-		view:setEmployee(gEmployeesModel.currentEmployee)
+		if gEmployeesModel.currentEmployee then
+			view:setEmployee(gEmployeesModel.currentEmployee)
+		elseif gEmployeesModel.newEmployee then
+
+			view:setEmployee(gEmployeesModel.newEmployee)
+			view.deleteButton.isVisible = false
+		else
+			error("Unknown state, why was I made? Why... WHY!!!???!")
+		end
 	end
 
 	function mediator:onRemove()
@@ -27,12 +35,18 @@ function EditEmployeeViewMediator:new()
 	function mediator:onSaveEmployee()
 		print("EditEmployeeViewMediator::onSaveEmployee")
 		local view = self.viewInstance
+		local filename = view:getImageFilename()
+		print("filename:", filename)
 		local vo = EmployeeVO:new({id=view.employee.id,
-									firstName=view.firstInput:getText(),
-									lastName=view.lastInput:getText(),
-									phoneNumber=view.phoneInput:getText(),
-									iconURL=view:getImageFilename()})
-		Runtime:dispatchEvent({name="updateEmployee", employee=vo})
+										firstName=view.firstInput:getText(),
+										lastName=view.lastInput:getText(),
+										phoneNumber=view.phoneInput:getText(),
+										iconURL=filename})
+		if view.employee == gEmployeesModel.currentEmployee then
+			Runtime:dispatchEvent({name="updateEmployee", employee=vo})
+		else
+			Runtime:dispatchEvent({name="saveEmployee", employee=vo})
+		end
 	end
 
 	function mediator:onBackButtonTouched()

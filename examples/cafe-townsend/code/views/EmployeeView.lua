@@ -44,6 +44,7 @@ function EmployeeView:new(parentGroup)
 		logoffButton:setSize(140, logoffButton.height)
 		logoffButton.x = 4
 		logoffButton.y = 6
+		logoffButton:addEventListener("onPushButtonTouched", self)
 
 		local newButton = PushButton:new(self)
 		self.newButton = newButton
@@ -51,6 +52,7 @@ function EmployeeView:new(parentGroup)
 		newButton:setSize(100, newButton.height)
 		newButton.x = header.width - newButton.width - 4
 		newButton.y = 6
+		newButton:addEventListener("onPushButtonTouched", self)
 
 		local headerSearch = display.newImage(self, "assets/images/phone/header-search.png", 0, 0, true)
 		self.headerSearch = headerSearch
@@ -63,6 +65,15 @@ function EmployeeView:new(parentGroup)
 		search:addEventListener("onSearch", self)
 
 		Runtime:dispatchEvent({name="onRobotlegsViewCreated", target=self})
+	end
+
+	function view:onPushButtonTouched(event)
+		local t = event.target
+		if t == self.logoffButton then
+			self:dispatchEvent({name="onLogoff"})
+		elseif t == self.newButton then
+			self:dispatchEvent({name="onNewEmployee"})
+		end
 	end
 
 	function view:onSearch(event)

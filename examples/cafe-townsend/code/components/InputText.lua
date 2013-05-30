@@ -56,6 +56,7 @@ function InputText:new(parentGroup, layoutWidth, layoutHeight, promptText)
 
 	function view:userInput(event)
 		self:updateVisibility()
+		self:dispatchEvent(event)
 	end
 
 	function view:updateVisibility()

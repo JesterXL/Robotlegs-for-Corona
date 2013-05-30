@@ -1,6 +1,17 @@
 EmployeeVO = {}
 
 function EmployeeVO:new(params)
+
+	if params == nil then
+		params = {
+			id=-1,
+			firstName="",
+			lastName="",
+			iconURL=nil,
+			phoneNumber="000-000-0000"
+		}
+	end
+
 	local vo = {}
 	vo.id = params.id
 	vo.firstName = params.firstName
