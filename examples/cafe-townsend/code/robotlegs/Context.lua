@@ -106,7 +106,7 @@ function Context:new()
 			local mediatorInstance = self.mediatorInstances[i]
 			if(mediatorInstance.viewInstance == viewInstance) then
 				mediatorInstance:onRemove()
-				mediatorInstance:destroy()
+				-- mediatorInstance:destroy()
 				local mediatorIndex = table.indexOf(self.mediatorInstances, mediatorInstance)
 				table.remove(self.mediatorInstances, mediatorIndex)
 				return true

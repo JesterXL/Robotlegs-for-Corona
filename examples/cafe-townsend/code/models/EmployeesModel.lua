@@ -27,12 +27,26 @@ function EmployeesModel:new()
       function model:delete(employee)
             local index = table.indexOf(self.employees, employee)
             if index then
-                  table.remove(self.employees)
+                  table.remove(self.employees, employee)
                   Runtime:dispatchEvent({name="EmployeesModel_onChanged", 
                                           target=self,
                                           index=index, 
                                           employee=employee,
-                                          kind="delete"})
+                                          kind="remove"})
+                  return true
+            end
+            return false
+      end
+
+      function model:save(employee)
+            local index = table.indexOf(self.employees, employee)
+            if index == nil then
+                  table.insert(self.employees, employee)
+                  Runtime:dispatchEvent({name="EmployeesModel_onChanged", 
+                                          target=self,
+                                          index=table.indexOf(self.employees, employee), 
+                                          employee=employee,
+                                          kind="add"})
                   return true
             end
             return false

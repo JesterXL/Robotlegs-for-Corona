@@ -5,7 +5,7 @@ function EmployeeVO:new(params)
 	vo.id = params.id
 	vo.firstName = params.firstName
 	vo.lastName = params.lastName
-	vo.icon = params.icon
+	vo.iconURL = params.iconURL
 	vo.phoneNumber = params.phoneNumber
 
 	function vo:getDisplayName()

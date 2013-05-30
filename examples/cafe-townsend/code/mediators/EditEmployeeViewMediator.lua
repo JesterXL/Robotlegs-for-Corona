@@ -2,7 +2,7 @@ EditEmployeeViewMediator = {}
 
 function EditEmployeeViewMediator:new()
 	local mediator = {}
-
+ 
 	function mediator:onRegister()
 		local view = self.viewInstance
 		view:addEventListener("onDeleteEmployee", self)
@@ -20,6 +20,10 @@ function EditEmployeeViewMediator:new()
 	function mediator:onDeleteEmployee()
 		print("EditEmployeeViewMediator::onDeleteEmployee")
 		Runtime:dispatchEvent({name="deleteEmployee", employee=self.viewInstance.employee})
+	end
+
+	function mediator:onSaveEmployee()
+		Runtime:dispatchEvent({name="saveEmployee", employee=self.viewInstance.employee})
 	end
 
 	return mediator

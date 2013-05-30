@@ -71,7 +71,7 @@ function EditEmployeeView:new(parentGroup)
 		local saveButton = PushButton:new(self, 140, 67)
 		self.saveButton = saveButton
 		saveButton.x = stage.width - saveButton.width - 6
-		saveButton.y = 6
+		saveButton.y = 0
 		saveButton:setLabel("Save")
 		saveButton:addEventListener("onPushButtonTouched", self)
 
@@ -127,19 +127,23 @@ function EditEmployeeView:new(parentGroup)
 		 --        permittedArrowDirections = { "up", "right" } },
 		 --        {baseDir=system.TemporaryDirectory, filename="image.jpg", type="image"} )
 
-		if self.menu == nil then
-			local picture = self.picture
-			local menu = HoverMenu:new(self, {"Choose Existing Photo", "New Photo"})
-			menu:addEventListener("onMenuButtonTouched", self)
-			self.menu = menu
-			menu.x = picture.x + picture.width / 2 - menu.width / 2
-			menu.y = picture.y + picture.height - 8
-			if menu.x < 0 then
-				menu.x = 0
+		if media.hasSource( media.Camera ) then
+			if self.menu == nil then
+				local picture = self.picture
+				local menu = HoverMenu:new(self, {"Choose Existing Photo", "New Photo"})
+				menu:addEventListener("onMenuButtonTouched", self)
+				self.menu = menu
+				menu.x = picture.x + picture.width / 2 - menu.width / 2
+				menu.y = picture.y + picture.height - 8
+				if menu.x < 0 then
+					menu.x = 0
+				end
+			else
+				self.menu:removeSelf()
+				self.menu = nil
 			end
 		else
-			self.menu:removeSelf()
-			self.menu = nil
+			self:chooseExistingPhoto()
 		end
 
 		-- local function onComplete(event)
@@ -194,12 +198,6 @@ function EditEmployeeView:new(parentGroup)
 
 	end
 
-	function view:completion(event)
-		if event.photo == nil then
-			local image = display.newImage(self, "image.jpg", system.TemporaryDirectory)
-		end
-	end
-
 	function view:onMenuButtonTouched(event)
 		self.menu:removeSelf()
 		self.menu = nil
@@ -226,6 +224,36 @@ function EditEmployeeView:new(parentGroup)
 		else
 		   native.showAlert( "Corona", "This device does not have a camera.", { "OK" } )
 		end
+	end
+
+	function view:completion(event)
+		if self.loadedImage then
+			self.loadedImage:removeSelf()
+		end
+
+		if event.target == nil then
+			print("loading local")
+			self.loadedImage = display.newImage(self, "image.jpg", system.TemporaryDirectory)
+			showProps(self.loadedImage)
+		else
+			print("using event")
+			self.loadedImage = event.target
+			display.save(self.loadedImage, "image.jpg")
+		end
+		self:sizePhoto()
+	end
+
+	function view:sizePhoto()
+	  local picture = self.picture
+	  local photo = self.loadedImage
+	   photo.width = picture.width
+	   photo.height = picture.height
+	   photo.x = picture.x + photo.width / 2
+	   photo.y = picture.y + photo.height / 2
+	   -- local mask = graphics.newMask("assets/images/phone/photo-mask.png")
+	   -- photo:setMask(mask)
+	   -- photo.maskX = -4
+	   -- photo.maskY = -4
 	end
 
 
