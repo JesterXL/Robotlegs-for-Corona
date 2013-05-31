@@ -63,7 +63,20 @@ function EmployeeView:new(parentGroup)
 		employeeList:addEventListener("onViewEmployee", function(e) view:dispatchEvent(e) end)
 		employeeList.y = headerSearch.y + headerSearch.height
 
+		Runtime:addEventListener("onStageTap", self)
+		Runtime:addEventListener("onStageTouch", self)
+
 		Runtime:dispatchEvent({name="onRobotlegsViewCreated", target=self})
+	end
+
+	function view:onStageTap(event)
+		print("EmployeeView::onStageTap:", event.phase)
+		stage:setFocus(self)
+	end
+
+	function view:onStageTouch(event)
+		print("EmployeeView::onStageTouch:", event.phase)
+		stage:setFocus(self)
 	end
 
 	function view:onPushButtonTouched(event)

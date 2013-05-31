@@ -15,6 +15,16 @@ function CafeTownsendApplication:new()
 
 	function application:init()
 		local background = display.newRect(self, 0, 0, stage.width, stage.height)
+		function background:tap(event)
+			Runtime:dispatchEvent({name="onStageTap", phase=event.phase})
+		end
+
+		function background:touch(event)
+			Runtime:dispatchEvent({name="onStageTouch", phase=event.phase})
+		end
+
+		background:addEventListener("tap", background)
+		background:addEventListener("touch", background)
 
 		local context = CafeTownsendContext:new()
 		context:init()
