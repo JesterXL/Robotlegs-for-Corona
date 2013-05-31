@@ -3,6 +3,7 @@ require "views.LoginView"
 require "views.LoadingView"
 require "views.EmployeeView"
 require "views.EditEmployeeView"
+require "views.EmployeeViewLarge"
 
 CafeTownsendApplication = {}
 
@@ -10,6 +11,7 @@ function CafeTownsendApplication:new()
 	local application = display.newGroup()
 	application.classType = "CafeTownsendApplication"
 	application.currentView = nil
+	application.currentViewName = nil
 
 	function application:init()
 		local background = display.newRect(self, 0, 0, stage.width, stage.height)
@@ -28,7 +30,30 @@ function CafeTownsendApplication:new()
 		local loadingView = LoadingView:new(self)
 		self.loadingView = loadingView
 
+		Runtime:addEventListener("orientation", self)
+
 		Runtime:dispatchEvent({name="onRobotlegsViewCreated", target=self})
+	end
+
+	function application:orientation(event)
+		local t = event.type
+		local viewName = self:getEmployeeViewBasedOnOrientation(t)
+		self:showView(viewName)
+	end
+
+	function application:getEmployeeViewBasedOnOrientation(orientation)
+		local currentView = self.currentViewName 
+		if currentView == "loginView" then
+			return "loginView"
+		end
+
+		if (orientation == "landscapeLeft" or orientation == "landscapeRight") then
+			return "employeeViewLarge"
+		elseif currentView == "employeeView" then
+			return "employeeView"
+		elseif currentView == "editEmployeeView" then
+			return "editEmployeeView"
+		end
 	end
 
 	function application:showView(name)
@@ -39,12 +64,16 @@ function CafeTownsendApplication:new()
 		end
 
 		local view
-		if name == "loginView" then
+		self.currentViewName = name
+		local viewName = self:getEmployeeViewBasedOnOrientation(t)
+		if viewName == "loginView" then
 			view = LoginView:new(self)
 			view:move(stage.width / 2 - view.width / 2, stage.height * 0.2)
-		elseif name == "employeeView" then
+		elseif viewName == "employeeViewLarge" then
+			view = EmployeeViewLarge:new(self)
+		elseif viewName == "employeeView" then
 			view = EmployeeView:new(self)
-		elseif name == "editEmployeeView" then
+		elseif viewName == "editEmployeeView" then
 			view = EditEmployeeView:new(self)
 		else
 			error("Unknown view: " .. name)

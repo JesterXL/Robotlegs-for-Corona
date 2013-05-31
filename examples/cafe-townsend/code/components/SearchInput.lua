@@ -81,7 +81,7 @@ function SearchInput:new(parentGroup)
 		self:userInput()
 	end
 
-	function view:getSearch()
+	function view:getText()
 		return self.searchField.text
 	end
 

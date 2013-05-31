@@ -9,7 +9,17 @@ function EmployeeViewMediator:new()
 		view:addEventListener("onViewEmployee", self)
 		view:addEventListener("onLogoff", self)
 		view:addEventListener("onNewEmployee", self)
-		view:setEmployees(gEmployeesModel.employees)
+
+		if gEmployeesModel.loaded then
+			view:setEmployees(gEmployeesModel.employees)
+		else
+			Runtime:dispatchEvent({name="onLoadEmployees"})
+			timer.performWithDelay(1500,function()
+				gEmployeesModel.loaded = true
+				view:setEmployees(gEmployeesModel.employees)
+				Runtime:dispatchEvent({name="onLoadEmployeesSuccess"})
+			end)
+		end
 	end
 
 	function mediator:onRemove()

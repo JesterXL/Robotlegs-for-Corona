@@ -9,6 +9,8 @@ function LoadingViewMediator:new()
 		Runtime:addEventListener("onLoginSuccess", self)
 		Runtime:addEventListener("deleteEmployee", self)
 		Runtime:addEventListener("onDeleteEmployeeSuccess", self)
+		Runtime:addEventListener("onLoadEmployees", self)
+		Runtime:addEventListener("onLoadEmployeesSuccess", self)
 		self.viewInstance.isVisible = false
 	end
 
@@ -18,6 +20,8 @@ function LoadingViewMediator:new()
 		Runtime:removeEventListener("onLoginSuccess", self)
 		Runtime:removeEventListener("deleteEmployee", self)
 		Runtime:removeEventListener("onDeleteEmployeeSuccess", self)
+		Runtime:removeEventListener("onLoadEmployees", self)
+		Runtime:removeEventListener("onLoadEmployeesSuccess", self)
 	end
 
 	function mediator:login(event)
@@ -45,7 +49,17 @@ function LoadingViewMediator:new()
 
 	function mediator:onDeleteEmployeeSuccess()
 		self.viewInstance:show(false)
-	end 
+	end
+
+	function mediator:onLoadEmployees()
+		self.viewInstance.isVisible = true
+		self.viewInstance:show(true)
+		self.viewInstance:setLabel("Loading Employees...")
+	end
+
+	function mediator:onLoadEmployeesSuccess()
+		self.viewInstance:show(false)
+	end
 
 	return mediator
 end

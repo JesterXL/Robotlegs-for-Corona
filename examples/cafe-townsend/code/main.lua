@@ -18,3 +18,9 @@ end
 
 
 bootstrap()
+
+-- require "components.EmployeeList"
+-- local list = EmployeeList:new(stage, 300, 400)
+-- require "models.EmployeesModel"
+-- local model = EmployeesModel:new()
+-- list:setEmployees(model.employees)

@@ -41,7 +41,7 @@ function CafeTownsendApplicationMediator:new()
 
 	function mediator:onLogoff()
 		gEmployeesModel.currentEmployee = nil
-		view:showView("loginView")
+		self.viewInstance:showView("loginView")
 	end
 
 	function mediator:onCreateNewEmployee()
