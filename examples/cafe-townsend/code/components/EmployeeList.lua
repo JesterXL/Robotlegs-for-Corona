@@ -170,7 +170,6 @@ function EmployeeList:new(parentGroup, layoutWidth, layoutHeight)
 	end
 
 	function view:onRowTouch(event)
-		self:dispatchEvent({name="onRowTouch"})
 		-- print("EmployeeList::onRowTouch")
 	    local phase = event.phase
 	    if phase == "tap" or phase == "release" then
@@ -214,6 +213,13 @@ function EmployeeList:new(parentGroup, layoutWidth, layoutHeight)
 	    rowTitle.x = rowTitle.x + 16
 	    rowTitle.y = row.contentHeight * 0.5
 	    rowTitle:setTextColor(unpack(self.HEADER_TEXT_COLOR))
+
+	    if employee then
+			local arrow = display.newImage(row, "assets/images/arrow.png")
+			arrow:setReferencePoint(display.TopLeftReferencePoint)
+			arrow.x = self.layoutWidth - (arrow.width + 8)
+			arrow.y = row.height / 2 - arrow.height / 2
+	    end
 	end
 
 	function view:destroy()

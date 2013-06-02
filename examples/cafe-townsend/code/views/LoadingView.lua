@@ -44,6 +44,8 @@ function LoadingView:new(parentGroup)
 
 		self:resize()
 
+		Runtime:addEventListener("orientation", self)
+
 		Runtime:dispatchEvent({name="onRobotlegsViewCreated", target=self})
 	end
 
@@ -52,10 +54,22 @@ function LoadingView:new(parentGroup)
 		self:resize()
 	end
 
+	function view:orientation()
+		self:resize()
+	end
+
 	function view:resize()
+		local background = self.background
 		local box = self.box
 		local field = self.field
 		local spinner = self.spinner
+
+		background.width = display.actualContentWidth
+		background.height = display.actualContentHeight
+		background:setReferencePoint(display.TopLeftReferencePoint)
+		background.x = 0
+		background.y = 0
+
 		box.x = display.actualContentWidth / 2 - box.width / 2
 		box.y = display.actualContentHeight * 0.3
 		field.x = display.actualContentWidth / 2 - field.width / 2

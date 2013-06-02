@@ -15,6 +15,9 @@ function CafeTownsendContext:new()
 		self:mapMediator("views.EmployeeView",
 							"mediators.EmployeeViewMediator")
 
+		self:mapMediator("views.EmployeeViewLarge",
+							"mediators.EmployeeViewMediator")
+
 		self:mapMediator("views.EditEmployeeView",
 							"mediators.EditEmployeeViewMediator")
 

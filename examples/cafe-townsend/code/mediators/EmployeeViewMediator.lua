@@ -42,6 +42,7 @@ function EmployeeViewMediator:new()
 	end
 
 	function mediator:onViewEmployee(event)
+		print("EmployeeView::onViewEmployee")
 		Runtime:dispatchEvent({name="onEditEmployee", employee=event.employee})
 	end
 

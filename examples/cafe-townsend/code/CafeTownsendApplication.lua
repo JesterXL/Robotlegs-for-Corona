@@ -14,7 +14,9 @@ function CafeTownsendApplication:new()
 	application.currentViewName = nil
 
 	function application:init()
+		print("EmployeeViewLarge::init")
 		local background = display.newRect(self, 0, 0, display.actualContentWidth, display.actualContentHeight)
+		self.background = background
 		function background:tap(event)
 			Runtime:dispatchEvent({name="onStageTap", phase=event.phase})
 		end
@@ -46,44 +48,65 @@ function CafeTownsendApplication:new()
 	end
 
 	function application:orientation(event)
-		local t = event.type
-		local viewName = self:getEmployeeViewBasedOnOrientation(t)
-		self:showView(viewName)
-	end
+		local background = self.background
+		background.width = display.actualContentWidth
+		background.height = display.actualContentHeight
+		background:setReferencePoint(display.TopLeftReferencePoint)
+		background.x = 0
+		background.y = 0
 
-	function application:getEmployeeViewBasedOnOrientation(orientation)
-		local currentView = self.currentViewName 
-		if currentView == "loginView" then
-			return "loginView"
+		local t = event.type
+		self.lastKnownOrientation = t
+		if self.currentViewName == "employeeView" or self.currentViewName == "employeeViewLarge" then
+			local employeeViewToShow = self:whichEmployeeViewToShowBasedOnOrientation()
+			self:showView(employeeViewToShow)
 		end
 
-		if (orientation == "landscapeLeft" or orientation == "landscapeRight") then
+		if self.currentViewName == "loginView" then
+			self.currentView:move(display.actualContentWidth / 2 - self.currentView.width / 2, display.actualContentHeight * 0.2)
+		end
+	end
+
+	function application:whichEmployeeViewToShowBasedOnOrientation()
+		local t = self.lastKnownOrientation
+		if t == "landscapeLeft" or t == "landscapeRight" then
 			return "employeeViewLarge"
-		elseif currentView == "employeeView" then
+		else
 			return "employeeView"
-		elseif currentView == "editEmployeeView" then
-			return "editEmployeeView"
 		end
 	end
 
 	function application:showView(name)
-		
+		print("CafeTownsendApplication::name:", name, ", currentViewName:", self.currentViewName)
+		if name == self.currentViewName then
+			return true
+		end
+
 		if self.currentView then
 			self.currentView:destroy()
 			self.currentView = nil
 		end
 
 		local view
+
 		self.currentViewName = name
-		local viewName = self:getEmployeeViewBasedOnOrientation(t)
-		if viewName == "loginView" then
+		-- local viewName = self:getEmployeeViewBasedOnOrientation(self.lastKnownOrientation)
+		-- print("viewName returned based on last known orientation:", viewName)
+		if name == "loginView" then
 			view = LoginView:new(self)
 			view:move(display.actualContentWidth / 2 - view.width / 2, display.actualContentHeight * 0.2)
-		elseif viewName == "employeeViewLarge" then
-			view = EmployeeViewLarge:new(self)
-		elseif viewName == "employeeView" then
-			view = EmployeeView:new(self)
-		elseif viewName == "editEmployeeView" then
+		elseif name == "employeeViewLarge" or name == "employeeView" then
+			local t = self.lastKnownOrientation
+			self.lastKnownOrientation = t
+			if self.currentViewName == "employeeView" or self.currentViewName == "employeeViewLarge" then
+				local employeeViewToShow = self:whichEmployeeViewToShowBasedOnOrientation()
+				if employeeViewToShow == "employeeView" then
+					view = EmployeeView:new(self)
+				else
+					view = EmployeeViewLarge:new(self)
+				end
+			end
+		elseif name == "editEmployeeView" then
 			view = EditEmployeeView:new(self)
 		else
 			error("Unknown view: " .. name)

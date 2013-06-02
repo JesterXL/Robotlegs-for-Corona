@@ -2,6 +2,7 @@ require "components.SearchInput"
 require "components.PushButton"
 require "components.AutoSizeText"
 require "components.EmployeeList"
+require "components.EditEmployeeLarge"
 local widget = require "widget"
 
 EmployeeViewLarge = {}
@@ -17,9 +18,14 @@ function EmployeeViewLarge:new(parentGroup)
 	end
 
 	function view:init()
+		print("EmployeeViewLarge::init")
 		local header = display.newImage(self, "assets/images/phone/header.png", 0, 0, true)
 		header:setReferencePoint(display.TopLeftReferencePoint)
 		self.header = header
+
+		header.width = display.actualContentWidth
+		header:setReferencePoint(display.TopLeftReferencePoint)
+		header.x = 0
 
 		local headerLabel = AutoSizeText:new(self)
 		self.headerLabel = headerLabel
@@ -48,22 +54,27 @@ function EmployeeViewLarge:new(parentGroup)
 		newButton.y = stage.height - (newButton.height * 2)
 		newButton:addEventListener("onPushButtonTouched", self)
 
-		local headerSearch = display.newImage(self, "assets/images/phone/header-search.png", 0, 0, true)
-		self.headerSearch = headerSearch
-		headerSearch:setReferencePoint(display.TopLeftReferencePoint)
-		headerSearch.y = header.y + header.height
-
 		local search = SearchInput:new(self)
 		self.search = search
-		search:move(headerSearch.x + 6, headerSearch.y + 6)
+		search:move(header.x + 6, header.y + header.height + 6)
 		search:addEventListener("onSearch", self)
 
-		local employeeList = EmployeeList:new(self, stage.width, stage.height - (headerSearch.y + headerSearch.height))
+		local employeListY = search.y + search.height + 6
+		local employeeList = EmployeeList:new(self, display.actualContentWidth * 0.3, display.actualContentHeight - employeListY - (newButton.height + 12))
 		self.employeeList = employeeList
-		employeeList:addEventListener("onViewEmployee", function(e) view:dispatchEvent(e) end)
-		employeeList.y = headerSearch.y + headerSearch.height
+		employeeList:addEventListener("onViewEmployee", self)
+		employeeList.y = employeListY
+
+		local editEmployee = EditEmployeeLarge:new(self)
+		self.editEmployee = editEmployee
+		editEmployee.x = display.actualContentWidth - (editEmployee.width + 8)
+		editEmployee.y = header.y + header.height + 8
 
 		Runtime:dispatchEvent({name="onRobotlegsViewCreated", target=self})
+	end
+
+	function view:onViewEmployee(event)
+		self.editEmployee:setEmployee(event.employee)
 	end
 
 	function view:onPushButtonTouched(event)
@@ -89,13 +100,12 @@ function EmployeeViewLarge:new(parentGroup)
 
 	function view:destroy()
 		Runtime:dispatchEvent({name="onRobotlegsViewDestroyed", target=self})
-		if self.employeeList then
-			self.employeeList:removeSelf()
-			self.employeeList = nil
-		end
+		self.employeeList:destroy()
+		self.employeeList = nil
 		self.search:destroy()
 		self.search = nil
-		
+		self.editEmployee:destroy()
+		self.editEmployee = nil
 		self:removeSelf()
 	end
 
