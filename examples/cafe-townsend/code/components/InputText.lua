@@ -30,6 +30,8 @@ function InputText:new(parentGroup, layoutWidth, layoutHeight, promptText)
 		label:setFontSize(21)
 		label:setAutoSize(true)
 		label:setText(self.promptText)
+
+		self:move(self.x, self.y)
 	end
 
 	function view:move(targetX, targetY)

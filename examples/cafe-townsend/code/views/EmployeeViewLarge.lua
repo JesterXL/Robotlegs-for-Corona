@@ -67,8 +67,7 @@ function EmployeeViewLarge:new(parentGroup)
 
 		local editEmployee = EditEmployeeLarge:new(self)
 		self.editEmployee = editEmployee
-		editEmployee.x = display.actualContentWidth - (editEmployee.width + 8)
-		editEmployee.y = header.y + header.height + 8
+		editEmployee:move(display.actualContentWidth - (editEmployee.width + 8), header.y + header.height + 8)
 
 		Runtime:dispatchEvent({name="onRobotlegsViewCreated", target=self})
 	end

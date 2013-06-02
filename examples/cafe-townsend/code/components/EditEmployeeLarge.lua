@@ -28,25 +28,35 @@ function EditEmployeeLarge:new(parentGroup)
 		form:setReferencePoint(display.TopLeftReferencePoint)
 		self.form = form
 
+		local firstInput = InputText:new(self, form.width - 8, 30, "First Name")
+		self.firstInput = firstInput
+		firstInput:addEventListener("userInput", self)
+
+		local lastInput = InputText:new(self, form.width - 8, 30, "Last Name")
+		self.lastInput = lastInput
+		lastInput:addEventListener("userInput", self)
+
+		local phoneInput = InputText:new(self, form.width - 8, 30, "Phone")
+		self.phoneInput = phoneInput
+		phoneInput:addEventListener("userInput", self)
+
+		self:move(self.x, self.y)
+	end
+
+	function view:move(targetX, targetY)
+		local picture = self.picture
+		local form = self.form
+		local firstInput = self.firstInput
+		local lastInput = self.lastInput
+		local phoneInput = self.phoneInput
 		local totalWidth = picture.width + 16 + form.width
 		picture.x = (display.actualContentWidth - totalWidth) / 2
 		form.x = picture.x + picture.width + 16
 		form.y = picture.y + picture.height + 16
 
-		local firstInput = InputText:new(self, form.width - 8, 30, "First Name")
-		self.firstInput = firstInput
 		firstInput:move(form.x + 8, form.y + 4)
-		firstInput:addEventListener("userInput", self)
-
-		local lastInput = InputText:new(self, form.width - 8, 30, "Last Name")
-		self.lastInput = lastInput
 		lastInput:move(firstInput.x, firstInput.y + 43)
-		lastInput:addEventListener("userInput", self)
-
-		local phoneInput = InputText:new(self, form.width - 8, 30, "Phone")
-		self.phoneInput = phoneInput
 		phoneInput:move(lastInput.x, lastInput.y + 44)
-		phoneInput:addEventListener("userInput", self)
 	end
 
 	function view:resize()
