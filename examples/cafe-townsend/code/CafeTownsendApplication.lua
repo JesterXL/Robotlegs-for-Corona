@@ -14,7 +14,7 @@ function CafeTownsendApplication:new()
 	application.currentViewName = nil
 
 	function application:init()
-		local background = display.newRect(self, 0, 0, stage.width, stage.height)
+		local background = display.newRect(self, 0, 0, display.actualContentWidth, display.actualContentHeight)
 		function background:tap(event)
 			Runtime:dispatchEvent({name="onStageTap", phase=event.phase})
 		end
@@ -78,7 +78,7 @@ function CafeTownsendApplication:new()
 		local viewName = self:getEmployeeViewBasedOnOrientation(t)
 		if viewName == "loginView" then
 			view = LoginView:new(self)
-			view:move(stage.width / 2 - view.width / 2, stage.height * 0.2)
+			view:move(display.actualContentWidth / 2 - view.width / 2, display.actualContentHeight * 0.2)
 		elseif viewName == "employeeViewLarge" then
 			view = EmployeeViewLarge:new(self)
 		elseif viewName == "employeeView" then

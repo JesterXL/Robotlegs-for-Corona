@@ -11,7 +11,7 @@ function LoadingView:new(parentGroup)
 	end
 
 	function view:init()
-		local background = display.newRect(self, 0, 0, stage.width, stage.height)
+		local background = display.newRect(self, 0, 0, display.actualContentWidth, display.actualContentHeight)
 		background:setReferencePoint(display.TopLeftReferencePoint)
 		background:setFillColor(100, 100, 100, 200)
 		self.background = background
@@ -56,11 +56,11 @@ function LoadingView:new(parentGroup)
 		local box = self.box
 		local field = self.field
 		local spinner = self.spinner
-		box.x = stage.width / 2 - box.width / 2
-		box.y = stage.height * 0.3
-		field.x = stage.width / 2 - field.width / 2
+		box.x = display.actualContentWidth / 2 - box.width / 2
+		box.y = display.actualContentHeight * 0.3
+		field.x = display.actualContentWidth / 2 - field.width / 2
 		field.y = box.y + box.height / 2 - field.height / 2 + 30
-		spinner.x = stage.width / 2 - spinner.width
+		spinner.x = display.actualContentWidth / 2 - spinner.width
 		spinner.y = box.y + 8
 	end
 

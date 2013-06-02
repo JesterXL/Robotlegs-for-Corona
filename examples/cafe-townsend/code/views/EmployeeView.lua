@@ -18,8 +18,10 @@ function EmployeeView:new(parentGroup)
 
 	function view:init()
 		local header = display.newImage(self, "assets/images/phone/header.png", 0, 0, true)
-		header:setReferencePoint(display.TopLeftReferencePoint)
 		self.header = header
+		header.width = display.actualContentWidth
+		header:setReferencePoint(display.TopLeftReferencePoint)
+		header.x = 0
 
 		local headerLabel = AutoSizeText:new(self)
 		self.headerLabel = headerLabel
@@ -29,7 +31,7 @@ function EmployeeView:new(parentGroup)
 		headerLabel:setTextColor(255, 255, 255)
 		headerLabel:setFont(self.FONT_NAME)
 		-- ghetto measurement in full effect
-		headerLabel.x = stage.width / 2 - headerLabel.width / 4
+		headerLabel.x = display.actualContentWidth / 2 - headerLabel.width / 4
 		headerLabel.y = header.y + header.height / 2 - headerLabel.height / 3
 
 		local logoffButton = PushButton:new(self)
@@ -50,7 +52,9 @@ function EmployeeView:new(parentGroup)
 
 		local headerSearch = display.newImage(self, "assets/images/phone/header-search.png", 0, 0, true)
 		self.headerSearch = headerSearch
+		headerSearch.width = display.actualContentWidth
 		headerSearch:setReferencePoint(display.TopLeftReferencePoint)
+		headerSearch.x = 0
 		headerSearch.y = header.y + header.height
 
 		local search = SearchInput:new(self)
@@ -58,26 +62,31 @@ function EmployeeView:new(parentGroup)
 		search:move(headerSearch.x + 6, headerSearch.y + 6)
 		search:addEventListener("onSearch", self)
 
-		local employeeList = EmployeeList:new(self, stage.width, stage.height - (headerSearch.y + headerSearch.height))
+		local employeeList = EmployeeList:new(self, display.actualContentWidth, display.actualContentHeight - (headerSearch.y + headerSearch.height))
 		self.employeeList = employeeList
 		employeeList:addEventListener("onViewEmployee", function(e) view:dispatchEvent(e) end)
 		employeeList.y = headerSearch.y + headerSearch.height
+		employeeList:addEventListener("onRowTouch", self)
 
-		Runtime:addEventListener("onStageTap", self)
-		Runtime:addEventListener("onStageTouch", self)
+		-- Runtime:addEventListener("onStageTap", self)
+		-- Runtime:addEventListener("onStageTouch", self)
 
 		Runtime:dispatchEvent({name="onRobotlegsViewCreated", target=self})
 	end
 
-	function view:onStageTap(event)
-		print("EmployeeView::onStageTap:", event.phase)
-		stage:setFocus(self)
+	function view:onRowTouch(event)
+		-- stage:setFocus(nil)
 	end
 
-	function view:onStageTouch(event)
-		print("EmployeeView::onStageTouch:", event.phase)
-		stage:setFocus(self)
-	end
+	-- function view:onStageTap(event)
+	-- 	print("EmployeeView::onStageTap:", event.phase)
+	-- 	stage:setFocus(self)
+	-- end
+
+	-- function view:onStageTouch(event)
+	-- 	print("EmployeeView::onStageTouch:", event.phase)
+	-- 	stage:setFocus(self)
+	-- end
 
 	function view:onPushButtonTouched(event)
 		local t = event.target
@@ -102,10 +111,10 @@ function EmployeeView:new(parentGroup)
 
 	function view:destroy()
 		Runtime:dispatchEvent({name="onRobotlegsViewDestroyed", target=self})
-		if self.employeeList then
-			self.employeeList:removeSelf()
-			self.employeeList = nil
-		end
+		Runtime:removeEventListener("onStageTap", self)
+		Runtime:removeEventListener("onStageTouch", self)
+		self.employeeList:destroy()
+		self.employeeList = nil
 		self.search:destroy()
 		self.search = nil
 		

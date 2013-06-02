@@ -19,7 +19,9 @@ function EditEmployeeView:new(parentGroup)
 
 	function view:init()
 		local header = display.newImage(self, "assets/images/phone/header.png", 0, 0, true)
+		header.width = display.actualContentWidth
 		header:setReferencePoint(display.TopLeftReferencePoint)
+		header.x = 0
 		self.header = header
 
 		local headerLabel = AutoSizeText:new(self)
@@ -38,7 +40,7 @@ function EditEmployeeView:new(parentGroup)
 		self.form = form
 
 		local totalWidth = picture.width + 16 + form.width
-		picture.x = (stage.width - totalWidth) / 2
+		picture.x = (display.actualContentWidth - totalWidth) / 2
 		picture.y = header.y + header.height + 32
 		form.x = picture.x + picture.width + 16
 		form.y = picture.y
@@ -73,7 +75,7 @@ function EditEmployeeView:new(parentGroup)
 
 		local saveButton = PushButton:new(self, 140, 67)
 		self.saveButton = saveButton
-		saveButton.x = stage.width - saveButton.width - 6
+		saveButton.x = display.actualContentWidth - saveButton.width - 6
 		saveButton.y = backButton.y
 		saveButton:setLabel("Save")
 		saveButton:addEventListener("onPushButtonTouched", self)
@@ -121,7 +123,7 @@ function EditEmployeeView:new(parentGroup)
 		local headerLabel = self.headerLabel
 		local header = self.header
 		-- ghetto measurement in full effect
-		headerLabel.x = stage.width / 2 - headerLabel.width / 2
+		headerLabel.x = display.actualContentWidth / 2 - headerLabel.width / 2
 		headerLabel.y = header.y + header.height / 2 - headerLabel.height / 2
 	end
 

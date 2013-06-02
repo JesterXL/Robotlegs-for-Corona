@@ -43,10 +43,7 @@ function EmployeeList:new(parentGroup, layoutWidth, layoutHeight)
 		self.employees = employees
 		local employees, sorted = self:createSorted(self:getSearch())
 
-		if self.tableView then
-			self.tableView:removeSelf()
-			self.tableView = nil
-		end
+		self:destroyTableView()
 
 		if employees == nil or #employees < 1 then
 			return false
@@ -58,19 +55,13 @@ function EmployeeList:new(parentGroup, layoutWidth, layoutHeight)
 		    width = self.layoutWidth, 
 		    height = self.layoutHeight,
 		    listener = function(e)
+		    	return true
 		    end,
 		    onRowRender = function(e)self:onRowRender(e)end,
-		    onRowTouch = function(e)self:onRowTouch(e)end,
-		    onRowUpdate = function(e)self:onRowUpdate(e)end
+		    onRowTouch = function(e)self:onRowTouch(e)end
 		}
 		self.tableView = tableView
 		self:insert(tableView)
-		
-		-- local headerSearch = self.headerSearch
-
-		
-		-- tableView.y = headerSearch.y + headerSearch.height
-		-- self.tableView = tableView
 
 		local isCategory = false
 	    local rowHeight = 80
@@ -114,6 +105,14 @@ function EmployeeList:new(parentGroup, layoutWidth, layoutHeight)
 				}
 				
 			end
+		end
+	end
+
+	function view:destroyTableView()
+		if self.tableView then
+			self.tableView:deleteAllRows()
+			self.tableView:removeSelf()
+			self.tableView = nil
 		end
 	end
 
@@ -171,6 +170,8 @@ function EmployeeList:new(parentGroup, layoutWidth, layoutHeight)
 	end
 
 	function view:onRowTouch(event)
+		self:dispatchEvent({name="onRowTouch"})
+		-- print("EmployeeList::onRowTouch")
 	    local phase = event.phase
 	    if phase == "tap" or phase == "release" then
 	    	local index = event.target.index
@@ -190,6 +191,7 @@ function EmployeeList:new(parentGroup, layoutWidth, layoutHeight)
 	end
 
 	function view:onRowRender( event )
+		-- print("EmployeeList::onRowRender")
 	    local phase = event.phase
 	    local row = event.row
 	    local key = tostring(row.index)
@@ -212,6 +214,12 @@ function EmployeeList:new(parentGroup, layoutWidth, layoutHeight)
 	    rowTitle.x = rowTitle.x + 16
 	    rowTitle.y = row.contentHeight * 0.5
 	    rowTitle:setTextColor(unpack(self.HEADER_TEXT_COLOR))
+	end
+
+	function view:destroy()
+		self:clearSearchTimer()
+		self:destroyTableView()
+		self:removeSelf()
 	end
 
 	return view
