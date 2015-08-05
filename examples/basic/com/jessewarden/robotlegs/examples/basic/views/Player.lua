@@ -5,23 +5,28 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-Player = {}
+local Player = {}
 
 function Player:new()
 	
-	if(Player.spriteSheet == nil) then
-		local spriteSheet = sprite.newSpriteSheet("player.png", 22, 17)
-		local spriteSet = sprite.newSpriteSet(spriteSheet, 1, 2)
-		sprite.add(spriteSet, "planeFly", 1, 2, 50, 0)
-		Player.spriteSheet = spriteSheet
-		Player.spriteSet = spriteSet
-	end
+	local spriteSheetOptions = {
+				width = 22,
+			    height = 17,
+			    numFrames = 2
+			}
+	local spriteSheet = graphics.newImageSheet("player.png", spriteSheetOptions)
+	local sequenceData =
+	{
+	    name="flying",
+	    start=1,
+	    count=2,
+	    time=90,
+	    loopCount = 0
+	}
 	
-	local img = sprite.newSprite(Player.spriteSet)
-	img:prepare("planeFly")
+	local img = display.newSprite(spriteSheet, sequenceData )
 	img:play()
 	img.classType = "Player" -- required for Robotlegs Mediators; convention for now for all your View classes
-	img.speed = 0.07 -- pixels per second
 	img.name = "Player"
 	img.maxHitPoints = 30
 	img.hitPoints = 30

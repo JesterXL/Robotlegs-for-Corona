@@ -20,7 +20,8 @@ function HealthBar:new()
 	healthBarGroup:insert(healthBarForeground)
 	healthBarForeground.x = healthBarBackground.x
 	healthBarForeground.y = healthBarBackground.y
-	healthBarForeground:setReferencePoint(display.TopLeftReferencePoint)
+	healthBarForeground.anchorX = 0
+	healthBarForeground.anchorY = 0
 	
 	-- from 0 to 1
 	function healthBarGroup:setHealth(value)
@@ -33,7 +34,7 @@ function HealthBar:new()
 		-- Meaning, no matter what reference point you set, it ALWAYS resizes from center when setting width/height.
 		-- So, we just increment based on the negative xReference of "how far my left is from my left origin".
 		-- Wow, that was a fun hour.
-		self.healthBarForeground.x = self.healthBarBackground.x + self.healthBarForeground.xReference
+		self.healthBarForeground.x = self.healthBarBackground.x + self.healthBarForeground.anchorX
 	end
 
 	Runtime:dispatchEvent({name="onRobotlegsViewCreated", target=healthBarGroup})

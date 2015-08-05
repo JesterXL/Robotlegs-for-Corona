@@ -10,7 +10,8 @@ HealthText = {}
 function HealthText:new(x, y, text)
 	local healthText = display.newText("", 0, 0, native.systemFont, 12)
 	healthText:setTextColor(255, 255, 255)
-	healthText:setReferencePoint(display.TopLeftReferencePoint)
+	healthText.anchorX = 0
+	healthText.anchorY = 0
 	healthText.x = x
 	healthText.y = y
 	healthText.text = text

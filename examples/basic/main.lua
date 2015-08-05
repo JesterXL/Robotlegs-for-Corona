@@ -40,18 +40,16 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-
-require "sprite"
 require "physics"
 widget = require "widget"
 
-require "com.jessewarden.robotlegs.examples.basic.views.Player"
-require "com.jessewarden.robotlegs.examples.basic.views.Bullet"
-require "com.jessewarden.robotlegs.examples.basic.views.HealthBar"
-require "com.jessewarden.robotlegs.examples.basic.views.HealButton"
-require "com.jessewarden.robotlegs.examples.basic.views.HealthText"
+local Player = require "com.jessewarden.robotlegs.examples.basic.views.Player"
+local Bullet = require "com.jessewarden.robotlegs.examples.basic.views.Bullet"
+local HealthBar = require "com.jessewarden.robotlegs.examples.basic.views.HealthBar"
+local HealButton = require "com.jessewarden.robotlegs.examples.basic.views.HealButton"
+local HealthText = require "com.jessewarden.robotlegs.examples.basic.views.HealthText"
 
-require "com.jessewarden.robotlegs.examples.basic.BasicContext"
+local BasicContext = require "com.jessewarden.robotlegs.examples.basic.BasicContext"
 
 function addLoop(o)
 	assert(o ~= nil, "You cannot pass nil values to the game loop")
@@ -151,7 +149,8 @@ function startThisMug()
         label = "Create Bullet",
         onEvent = onCreateBullet
     }
-    creatBulletButton:setReferencePoint(display.TopLeftReferencePoint)
+    creatBulletButton.anchorX = 0
+    creatBulletButton.anchorY = 0
 	
 	healButton = HealButton:new(creatBulletButton.x + creatBulletButton.width + 4, stage.height - 72)
 	
@@ -176,7 +175,8 @@ function startThisMug()
         label = "Pause",
         onEvent = onPauseGame
     }
-    pauseButton:setReferencePoint(display.TopLeftReferencePoint)
+    pauseButton.anchorX = 0
+    pauseButton.anchorY = 0
 
     local unpauseButton = widget.newButton
 	{
@@ -187,7 +187,8 @@ function startThisMug()
         label = "UNPause",
         onEvent = onUnpause
     }
-    unpauseButton:setReferencePoint(display.TopLeftReferencePoint)
+    unpauseButton.anchorX = 0
+    unpauseButton.anchorY = 0
 end
 
 startThisMug()
