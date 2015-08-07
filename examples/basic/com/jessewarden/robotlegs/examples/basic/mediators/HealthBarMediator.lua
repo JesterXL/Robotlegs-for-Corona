@@ -6,11 +6,11 @@
 --]]
 
 
-require "org.robotlegs.Mediator"
+local Mediator = require "org.robotlegs.Mediator"
 
-require "com.jessewarden.robotlegs.examples.basic.models.PlayerModel"
+local PlayerModel = require "com.jessewarden.robotlegs.examples.basic.models.PlayerModel"
 
-HealthBarMediator = {}
+local HealthBarMediator = {}
 
 function HealthBarMediator:new()
 	

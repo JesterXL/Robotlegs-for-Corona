@@ -5,23 +5,22 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-HealButton = {}
+local BasicButton = require "com.jessewarden.robotlegs.examples.basic.views.BasicButton"
+local HealButton = {}
 function HealButton:new(x, y)
 	local group = display.newGroup()
+	group.anchorX = 0
+	group.anchorY = 0
 	group.x = x
 	group.y = y
 	function group:onPress(event)
 		group:dispatchEvent({name="clicked", target=group})
 	end
 	
-	local healButton = widget.newButton
-	{
-        id = "healButton",
-        x = 0,
-        y = 0,
-        label = "Heal Player",
+	local healButton = BasicButton:new({
+		label = "Heal Player",
 		onPress = group.onPress
-    }
+	})
 	group:insert(healButton)
 	group.classType = "HealButton"
 

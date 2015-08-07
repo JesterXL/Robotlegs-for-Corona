@@ -5,9 +5,9 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-require "com.jessewarden.robotlegs.examples.basic.models.PlayerModel"
+local PlayerModel = require "com.jessewarden.robotlegs.examples.basic.models.PlayerModel"
 
-HealPlayerCommand = {}
+local HealPlayerCommand = {}
 
 function HealPlayerCommand:new()
 	local command = {}

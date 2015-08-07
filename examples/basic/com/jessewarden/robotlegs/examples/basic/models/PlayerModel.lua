@@ -5,7 +5,7 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-PlayerModel = {}
+local PlayerModel = {}
 PlayerModel.instance = {}
 PlayerModel.instance.hitPoints = 30
 PlayerModel.instance.maxHitPoints = 30

@@ -5,7 +5,7 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-HealthText = {}
+local HealthText = {}
 
 function HealthText:new(x, y, text)
 	local healthText = display.newText("", 0, 0, native.systemFont, 12)

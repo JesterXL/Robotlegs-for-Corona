@@ -5,7 +5,7 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-Context = {}
+local Context = {}
 
 function Context:new()
 	local context = {}

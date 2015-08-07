@@ -5,7 +5,7 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-Command = {}
+local Command = {}
 
 function Command:new()
 	local command = {}

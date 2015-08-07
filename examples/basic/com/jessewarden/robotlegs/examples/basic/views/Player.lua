@@ -28,6 +28,7 @@ function Player:new()
 	img:play()
 	img.classType = "Player" -- required for Robotlegs Mediators; convention for now for all your View classes
 	img.name = "Player"
+	img.speed = 0.07 -- pixels per second
 	img.maxHitPoints = 30
 	img.hitPoints = 30
 	img.planeXTarget = 0

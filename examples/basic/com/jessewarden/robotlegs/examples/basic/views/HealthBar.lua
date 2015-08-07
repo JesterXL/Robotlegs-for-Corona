@@ -5,7 +5,7 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-HealthBar = {}
+local HealthBar = {}
 
 function HealthBar:new()
 	local healthBarGroup = display.newGroup()
@@ -14,6 +14,8 @@ function HealthBar:new()
 	local healthBarBackground = display.newImage("health_bar_background.png", 0, 0)
 	healthBarGroup.healthBarBackground = healthBarBackground
 	healthBarGroup:insert(healthBarBackground)
+	healthBarBackground.anchorX = 0
+	healthBarBackground.anchorY = 0
 	
 	healthBarForeground = display.newImage("health_bar_foreground.png", 0, 0)
 	healthBarGroup.healthBarForeground = healthBarForeground

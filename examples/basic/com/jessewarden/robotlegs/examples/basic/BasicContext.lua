@@ -5,9 +5,9 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-require "org.robotlegs.Context"
+local Context = require "org.robotlegs.Context"
 
-BasicContext = {}
+local BasicContext = {}
 
 function BasicContext:new()
 	local context = Context:new()

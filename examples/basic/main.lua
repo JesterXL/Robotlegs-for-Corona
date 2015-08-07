@@ -15,6 +15,8 @@
 	
 	NOTE: Please keep in mind since mediating views is currently manual, you are responsible for un-mediating them as well.
 	
+	8.7.2015 - converted to Graphics 2.0
+
 	5.4.2013 - updated to simplified Robotlegs API and latest v2 Widgets.
 
 	1.13.2012 - updated to latest widget API and changed x and y for buttons to top and left.
@@ -26,12 +28,9 @@
 	
 	Email
 		jesterxl@jessewarden.com
-		jessew@webappsolution.com
-		jesse.warden@gmail.com (G+)
 		
 	Web
 		http://jessewarden.com
-		http://webappsolution.com
 	
 
 	Copyright (c) 2011 the original author or authors
@@ -40,8 +39,7 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-require "physics"
-widget = require "widget"
+local physics = require "physics"
 
 local Player = require "com.jessewarden.robotlegs.examples.basic.views.Player"
 local Bullet = require "com.jessewarden.robotlegs.examples.basic.views.Bullet"
@@ -50,6 +48,8 @@ local HealButton = require "com.jessewarden.robotlegs.examples.basic.views.HealB
 local HealthText = require "com.jessewarden.robotlegs.examples.basic.views.HealthText"
 
 local BasicContext = require "com.jessewarden.robotlegs.examples.basic.BasicContext"
+
+local BasicButton = require "com.jessewarden.robotlegs.examples.basic.views.BasicButton"
 
 function addLoop(o)
 	assert(o ~= nil, "You cannot pass nil values to the game loop")
@@ -104,12 +104,16 @@ function onCreateBullet(event)
 	return true
 end
 
-function onPauseGame()
-	Runtime:removeEventListener("enterFrame", animate)
+function onPauseGame(event)
+	if event.phase == 'ended' then
+		Runtime:removeEventListener("enterFrame", animate)
+	end
 end
 
-function onUnpause()
-	Runtime:addEventListener("enterFrame", animate)
+function onUnpause(event)
+	if event.phase == 'ended' then
+		Runtime:addEventListener("enterFrame", animate)
+	end
 end
 
 function startThisMug()
@@ -131,7 +135,7 @@ function startThisMug()
 	healthBar.x = stage.width - healthBar.width - 4
 	healthBar.y = 40
 	
-	healthText = HealthText:new(stage.x + 30, stage.y + 30, "0/0")
+	healthText = HealthText:new(30, 30, "0/0")
 	
 	player = Player.new()
 	player.planeXTarget = stage.width / 2
@@ -140,21 +144,19 @@ function startThisMug()
 	player.y = player.planeYTarget
 	addLoop(player)
 	
-	local creatBulletButton = widget.newButton
+	local creatBulletButton = BasicButton:new(
 	{
-        id = "createBulletButton",
-        left = 0,
-        top = stage.height - 72,
-        width=160,
         label = "Create Bullet",
-        onEvent = onCreateBullet
-    }
-    creatBulletButton.anchorX = 0
-    creatBulletButton.anchorY = 0
+        onPress = onCreateBullet
+    })
+    creatBulletButton.y = 100
 	
-	healButton = HealButton:new(creatBulletButton.x + creatBulletButton.width + 4, stage.height - 72)
-	
-	local planeRect = display.newRect(0, 0, stage.width, stage.height - (stage.height - creatBulletButton.y))
+	healButton = HealButton:new(creatBulletButton.x + creatBulletButton.width + 4, stage.height - 60)
+	creatBulletButton.y = healButton.y
+
+	local planeRect = display.newRect(0, healButton.height, stage.width, stage.height - healButton.height * 2)
+	planeRect.anchorX = 0
+	planeRect.anchorY = 0
 	planeRect.strokeWidth = 3
 	planeRect:setFillColor(140, 140, 140)
 	planeRect:setStrokeColor(180, 180, 180)
@@ -166,29 +168,21 @@ function startThisMug()
 	Runtime:addEventListener("enterFrame", animate )
 	planeRect:addEventListener("touch", onTouch)	
 
-	local pauseButton = widget.newButton
+	local pauseButton = BasicButton:new(
 	{
-        id = "pauseButton",
-        left = 0,
-        top = stage.height - 200,
-        width=160,
         label = "Pause",
-        onEvent = onPauseGame
-    }
-    pauseButton.anchorX = 0
-    pauseButton.anchorY = 0
+        onPress = onPauseGame
+    })
+    pauseButton.x = healButton.x + healButton.width + 2
+    pauseButton.y = healButton.y
 
-    local unpauseButton = widget.newButton
+    local unpauseButton = BasicButton:new(
 	{
-        id = "unpauseButton",
-        left = 200,
-        top = stage.height - 200,
-        width=160,
-        label = "UNPause",
-        onEvent = onUnpause
-    }
-    unpauseButton.anchorX = 0
-    unpauseButton.anchorY = 0
+        label = "Unpause",
+        onPress = onUnpause
+    })
+    unpauseButton.x = pauseButton.x + pauseButton.width + 2
+    unpauseButton.y = pauseButton.y
 end
 
 startThisMug()

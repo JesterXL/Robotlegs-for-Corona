@@ -6,7 +6,7 @@
 --]]
 
 
-Bullet = {}
+local Bullet = {}
 
 function Bullet:new(startX, startY, targetPoint)
 	local bullet = display.newImage("bullet.png")
