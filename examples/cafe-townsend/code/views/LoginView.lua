@@ -19,7 +19,7 @@ function LoginView:new(parentGroup)
 		titleField:setTextColor(0, 0, 0)
 		titleField:setFontSize(21)
 		titleField:setAutoSize(true)
-		titleField:setText("Cafe Townsend Login")
+		titleField:setText("Cafe Townsend Login (u: admin, p: password)")
 
 		local loginBackground = display.newImage("assets/images/phone/login-form-background.png")
 		self.loginBackground = loginBackground
