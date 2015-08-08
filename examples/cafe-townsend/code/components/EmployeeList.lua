@@ -9,8 +9,8 @@ function EmployeeList:new(parentGroup, layoutWidth, layoutHeight)
 	view.employeesHash = {}
 	view.lettersHash = {}
 	view.COLOR_TEXT = {0, 0, 0}
-	view.HEADER_TEXT_COLOR = {14, 106, 166}
-	view.HEADER_COLOR = {89, 179, 245}
+	view.HEADER_TEXT_COLOR = {14/255, 106/255, 166/255}
+	view.HEADER_COLOR = {89/255, 179/255, 245/255}
 	view.layoutWidth = layoutWidth
 	view.layoutHeight = layoutHeight
 	view.searchFilter = nil
@@ -88,9 +88,9 @@ function EmployeeList:new(parentGroup, layoutWidth, layoutHeight)
 				rowHeight = 60,
 				rowColor = 
 		        { 
-		            default = self.HEADER_COLOR,
+		            default = {89/255, 179/255, 245/255},
 		        },
-		        
+
 				lineColor = lineColor
 			}
 
@@ -212,10 +212,12 @@ function EmployeeList:new(parentGroup, layoutWidth, layoutHeight)
 	    end
 
 	    local rowTitle = display.newText(row, textForRow, 0, 0, native.systemFont, 28)
-	    rowTitle.x = row.x - ( row.contentWidth * 0.5 ) + ( rowTitle.contentWidth * 0.5 )
+	    rowTitle.anchorX = 0
+	    -- rowTitle.anchorY = 0
 	    rowTitle.x = rowTitle.x + 16
 	    rowTitle.y = row.contentHeight * 0.5
 	    rowTitle:setTextColor(unpack(self.HEADER_TEXT_COLOR))
+	    -- rowTitle:setTextColor(14, 106, 166)
 
 	    if employee then
 			local arrow = display.newImage(row, "assets/images/arrow.png")
