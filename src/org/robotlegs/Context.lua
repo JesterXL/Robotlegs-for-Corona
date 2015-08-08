@@ -1,10 +1,3 @@
---[[
-	Copyright (c) 2011 the original author or authors
-
-	Permission is hereby granted to use, modify, and distribute this file
-	in accordance with the terms of the license agreement accompanying it.
---]]
-
 local Context = {}
 
 function Context:new()
@@ -83,7 +76,7 @@ function Context:new()
 		--print("Context::createMediator, viewInstance: ", viewInstance)
 		assert(viewInstance.classType, "viewInstance does not have a classType parameter.")
 		local className = assert(self:getClassName(viewInstance.classType), "Failed to get class name")
-		assert(_G[className], "Cannot find viewInstance class")
+		-- assert(_G[className], "Cannot find viewInstance class")
 		assert(self:hasCreatedMediator(viewInstance) == false, "viewInstance already has an instantiated Mediator.")
 		local mediatorClassName = self.mediators[viewInstance.classType]
 		assert(mediatorClassName, "There is no Mediator class registered for this View class.")

@@ -1,5 +1,12 @@
 h2. Robotlegs Framework Changelog:
 
+h4. v0.5
+
+August 8th, 2015
+
+- upgraded all examples to Graphics 2.0
+- converted all classes to be more congurent with Lua 5.2 classes that don't use _G.
+
 h3. v0.4
 
 May 4th, 2013
