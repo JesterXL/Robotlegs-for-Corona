@@ -1,4 +1,4 @@
-UpdateEmployeeCommand = {}
+local UpdateEmployeeCommand = {}
 
 function UpdateEmployeeCommand:new()
 	local command = {}

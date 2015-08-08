@@ -1,6 +1,6 @@
-require "components.AutoSizeText"
+local AutoSizeText = require "components.AutoSizeText"
 
-InputText = {}
+local InputText = {}
 
 function InputText:new(parentGroup, layoutWidth, layoutHeight, promptText)
 	local view = display.newGroup()

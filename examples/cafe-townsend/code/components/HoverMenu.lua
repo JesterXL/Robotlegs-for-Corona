@@ -1,6 +1,6 @@
-require "components.PushButton"
+local PushButton = require "components.PushButton"
 
-HoverMenu = {}
+local HoverMenu = {}
 
 function HoverMenu:new(parentGroup, buttons)
 	local menu = display.newGroup()

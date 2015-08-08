@@ -1,4 +1,4 @@
-EventDispatcher = {}
+local EventDispatcher = {}
 
 function EventDispatcher:initialize(table)
 	table.dispatchEvent = EventDispatcher.dispatchEvent

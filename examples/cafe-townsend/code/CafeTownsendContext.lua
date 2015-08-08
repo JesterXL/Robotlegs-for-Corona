@@ -1,6 +1,6 @@
-require "robotlegs.Context"
+local Context = require "robotlegs.Context"
 
-CafeTownsendContext = {}
+local CafeTownsendContext = {}
 
 function CafeTownsendContext:new()
 	local context = Context:new()

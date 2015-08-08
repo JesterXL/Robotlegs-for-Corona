@@ -5,7 +5,7 @@
 	in accordance with the terms of the license agreement accompanying it.
 --]]
 
-Mediator = {}
+local Mediator = {}
 
 function Mediator:new()
 

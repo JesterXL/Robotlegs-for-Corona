@@ -1,4 +1,4 @@
-EmployeeVO = {}
+local EmployeeVO = {}
 
 function EmployeeVO:new(params)
 

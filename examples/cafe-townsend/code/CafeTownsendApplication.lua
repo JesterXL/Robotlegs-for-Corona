@@ -1,11 +1,11 @@
-require "CafeTownsendContext"
-require "views.LoginView"
-require "views.LoadingView"
-require "views.EmployeeView"
-require "views.EditEmployeeView"
-require "views.EmployeeViewLarge"
+local CafeTownsendContext = require "CafeTownsendContext"
+local LoginView = require "views.LoginView"
+local LoadingView = require "views.LoadingView"
+local EmployeeView = require "views.EmployeeView"
+local EditEmployeeView = require "views.EditEmployeeView"
+local EmployeeViewLarge = require "views.EmployeeViewLarge"
 
-CafeTownsendApplication = {}
+local CafeTownsendApplication = {}
 
 function CafeTownsendApplication:new()
 	local application = display.newGroup()
@@ -15,7 +15,12 @@ function CafeTownsendApplication:new()
 
 	function application:init()
 		print("EmployeeViewLarge::init")
+		print("*********")
+		print("contentCenterX: " .. tostring(display.contentCenterX))
+		print("screenOriginX: " .. tostring(display.screenOriginX))
 		local background = display.newRect(self, 0, 0, display.actualContentWidth, display.actualContentHeight)
+		background.anchorX = 0
+		background.anchorY = 0
 		self.background = background
 		function background:tap(event)
 			Runtime:dispatchEvent({name="onStageTap", phase=event.phase})

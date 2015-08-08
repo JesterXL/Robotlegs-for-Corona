@@ -1,4 +1,4 @@
-require "models.EmployeesModel"
+local EmployeesModel = require "models.EmployeesModel"
 StartupCommand = {}
 
 function StartupCommand:new()

@@ -1,11 +1,11 @@
-require "components.AutoSizeText"
-require "components.Picture"
-require "components.InputText"
-require "components.DeleteButton"
-require "components.BackButton"
-require "components.HoverMenu"
+local AutoSizeText = require "components.AutoSizeText"
+local Picture = require "components.Picture"
+local InputText = require "components.InputText"
+local DeleteButton = require "components.DeleteButton"
+local BackButton = require "components.BackButton"
+local HoverMenu = require "components.HoverMenu"
 
-EditEmployeeView = {}
+local EditEmployeeView = {}
 
 function EditEmployeeView:new(parentGroup)
 	local view = display.newGroup()

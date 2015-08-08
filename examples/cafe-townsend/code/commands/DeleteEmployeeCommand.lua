@@ -1,6 +1,6 @@
-require "services.DeleteEmployeeService"
+local DeleteEmployeeService =  "services.DeleteEmployeeService"
 
-DeleteEmployeeCommand = {}
+local DeleteEmployeeCommand = {}
 
 function DeleteEmployeeCommand:new()
 	local command = {}

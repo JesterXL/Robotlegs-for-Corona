@@ -1,6 +1,6 @@
-require "components.AutoSizeText"
-require "components.PushButton"
-LoginView = {}
+local AutoSizeText = require "components.AutoSizeText"
+local PushButton = require "components.PushButton"
+local LoginView = {}
 
 function LoginView:new(parentGroup)
 	local view = display.newGroup()
@@ -23,7 +23,8 @@ function LoginView:new(parentGroup)
 
 		local loginBackground = display.newImage("assets/images/phone/login-form-background.png")
 		self.loginBackground = loginBackground
-		loginBackground:setReferencePoint(display.TopLeftReferencePoint)
+		loginBackground.anchorX = 0
+		loginBackground.anchorY = 0
 		self:insert(loginBackground)
 		
 		local line = display.newLine(self, 0, 0, loginBackground.width, 0)
@@ -32,14 +33,16 @@ function LoginView:new(parentGroup)
 		
 		local usernameField = native.newTextField(0, 0, loginBackground.width - 8, 40)
 		self.usernameField = usernameField
-		usernameField:setReferencePoint(display.TopLeftReferencePoint)
+		usernameField.anchorX = 0
+		usernameField.anchorY = 0
 		usernameField.hasBackground = false
 		usernameField.font = self.FONT
 		usernameField:addEventListener("userInput", self)
 
 		local passwordField = native.newTextField(0, 0, usernameField.width, 40)
 		self.passwordField = passwordField
-		passwordField:setReferencePoint(display.TopLeftReferencePoint)
+		passwordField.anchorX = 0
+		passwordField.anchorY = 0
 		passwordField.hasBackground = false
 		passwordField.font = self.FONT
 		-- passwordField.isSecure = true

@@ -1,10 +1,10 @@
-require "components.SearchInput"
-require "components.PushButton"
-require "components.AutoSizeText"
-require "components.EmployeeList"
+local SearchInput = require "components.SearchInput"
+local PushButton = require "components.PushButton"
+local AutoSizeText = require "components.AutoSizeText"
+local EmployeeList = require "components.EmployeeList"
 local widget = require "widget"
 
-EmployeeView = {}
+local EmployeeView = {}
 
 function EmployeeView:new(parentGroup)
 	local view = display.newGroup()
@@ -20,6 +20,8 @@ function EmployeeView:new(parentGroup)
 		print("EmployeeView::init")
 		local header = display.newImage(self, "assets/images/phone/header.png", 0, 0, true)
 		self.header = header
+		header.anchorX = 0
+		header.anchorY = 0
 		
 		local headerLabel = AutoSizeText:new(self)
 		self.headerLabel = headerLabel
@@ -29,7 +31,6 @@ function EmployeeView:new(parentGroup)
 		headerLabel:setTextColor(255, 255, 255)
 		headerLabel:setFont(self.FONT_NAME)
 		
-
 		local logoffButton = PushButton:new(self)
 		self.logoffButton = logoffButton
 		logoffButton:setLabel("Log Off")
@@ -42,6 +43,8 @@ function EmployeeView:new(parentGroup)
 
 		local headerSearch = display.newImage(self, "assets/images/phone/header-search.png", 0, 0, true)
 		self.headerSearch = headerSearch
+		headerSearch.anchorX = 0
+		headerSearch.anchorY = 0
 
 		local search = SearchInput:new(self)
 		self.search = search
@@ -85,7 +88,6 @@ function EmployeeView:new(parentGroup)
 		local employeeList = self.employeeList
 
 		header.width = display.actualContentWidth
-		header:setReferencePoint(display.TopLeftReferencePoint)
 		header.x = 0
 
 		-- ghetto measurement in full effect
@@ -101,11 +103,9 @@ function EmployeeView:new(parentGroup)
 		newButton.y = 6
 
 		headerSearch.width = display.actualContentWidth
-		headerSearch:setReferencePoint(display.TopLeftReferencePoint)
 		headerSearch.x = 0
 		headerSearch.y = header.y + header.height
-
-		print(self.search, search)
+		
 		search:move(headerSearch.x + 6, headerSearch.y + 6)
 
 		employeeList.y = headerSearch.y + headerSearch.height

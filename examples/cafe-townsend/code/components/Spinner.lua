@@ -1,4 +1,4 @@
-Spinner = {}
+local Spinner = {}
 
 function Spinner:new(parentGroup)
 	if Spinner.sheet == nil then
@@ -17,7 +17,8 @@ function Spinner:new(parentGroup)
 	if parentGroup then
 		parentGroup:insert(spinner)
 	end
-	spinner:setReferencePoint(display.TopLeftReferencePoint)
+	spinner.anchorX = 0
+	spinner.anchorY = 0
 	spinner:setSequence("spin")
 	spinner:play()
 

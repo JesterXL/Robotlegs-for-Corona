@@ -1,6 +1,6 @@
-require "components.AutoSizeText"
+local AutoSizeText = require "components.AutoSizeText"
 
-Picture = {}
+local Picture = {}
 
 function Picture:new(parentGroup)
 	local view = display.newGroup()

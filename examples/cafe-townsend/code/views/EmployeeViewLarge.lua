@@ -1,11 +1,11 @@
-require "components.SearchInput"
-require "components.PushButton"
-require "components.AutoSizeText"
-require "components.EmployeeList"
-require "components.EditEmployeeLarge"
+local SearchInput = require "components.SearchInput"
+local PushButton = require "components.PushButton"
+local AutoSizeText = require "components.AutoSizeText"
+local EmployeeList = require "components.EmployeeList"
+local EditEmployeeLarge = require "components.EditEmployeeLarge"
 local widget = require "widget"
 
-EmployeeViewLarge = {}
+local EmployeeViewLarge = {}
 
 function EmployeeViewLarge:new(parentGroup)
 	local view = display.newGroup()

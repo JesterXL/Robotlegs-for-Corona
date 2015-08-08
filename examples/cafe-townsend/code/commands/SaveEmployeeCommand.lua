@@ -1,4 +1,4 @@
-SaveEmployeeCommand = {}
+local SaveEmployeeCommand = {}
 
 function SaveEmployeeCommand:new()
 	local command = {}

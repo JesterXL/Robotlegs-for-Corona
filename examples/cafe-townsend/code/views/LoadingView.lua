@@ -1,6 +1,6 @@
-require "components.AutoSizeText"
-require "components.Spinner"
-LoadingView = {}
+local AutoSizeText = require "components.AutoSizeText"
+local Spinner = require "components.Spinner"
+local LoadingView = {}
 
 function LoadingView:new(parentGroup)
 	local view = display.newGroup()
@@ -12,7 +12,8 @@ function LoadingView:new(parentGroup)
 
 	function view:init()
 		local background = display.newRect(self, 0, 0, display.actualContentWidth, display.actualContentHeight)
-		background:setReferencePoint(display.TopLeftReferencePoint)
+		background.anchorX = 0
+		background.anchorY = 0
 		background:setFillColor(100, 100, 100, 200)
 		self.background = background
 		-- [jwarden 5.29.2013] Mortal Kombat voice "MODALITY!"
@@ -26,7 +27,8 @@ function LoadingView:new(parentGroup)
 		background:addEventListener("tap", background)
 
 		local box = display.newRoundedRect(self, 0, 0, 340, 200, 6)
-		box:setReferencePoint(display.TopLeftReferencePoint)
+		box.anchorX = 0
+		box.anchorY = 0
 		box:setFillColor(100, 100, 100, 235)
 		self.box = box
 
@@ -66,7 +68,8 @@ function LoadingView:new(parentGroup)
 
 		background.width = display.actualContentWidth
 		background.height = display.actualContentHeight
-		background:setReferencePoint(display.TopLeftReferencePoint)
+		background.anchorX = 0
+		background.anchorY = 0
 		background.x = 0
 		background.y = 0
 

@@ -1,6 +1,6 @@
-require "vo.EmployeeVO"
+local EmployeeVO = require "vo.EmployeeVO"
 
-CafeTownsendApplicationMediator = {}
+local CafeTownsendApplicationMediator = {}
 
 function CafeTownsendApplicationMediator:new()
 	local mediator = {}

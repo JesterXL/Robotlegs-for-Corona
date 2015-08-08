@@ -1,5 +1,5 @@
-require "utils.EventDispatcher"
-DeleteEmployeeService = {}
+local require "utils.EventDispatcher"
+local DeleteEmployeeService = {}
 
 function DeleteEmployeeService:new()
 	local service = {}

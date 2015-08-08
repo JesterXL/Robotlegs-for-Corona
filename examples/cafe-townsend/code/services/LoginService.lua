@@ -1,7 +1,7 @@
-require "utils.EventDispatcher"
-json = require "json"
-require "services.ReadFileContentsService"
-LoginService = {}
+local EventDispatcher = require "utils.EventDispatcher"
+local json = require "json"
+local ReadFileContentsService = require "services.ReadFileContentsService"
+local LoginService = {}
 
 function LoginService:new()
 	local service = {}

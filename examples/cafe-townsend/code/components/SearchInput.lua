@@ -1,6 +1,6 @@
-require "components.AutoSizeText"
+local AutoSizeText = require "components.AutoSizeText"
 
-SearchInput = {}
+local SearchInput = {}
 
 function SearchInput:new(parentGroup)
 	local view = display.newGroup()
@@ -13,11 +13,13 @@ function SearchInput:new(parentGroup)
 	function view:init()
 		local background = display.newImage(self, "assets/images/phone/search-background.png")
 		self.background = background
-		background:setReferencePoint(display.TopLeftReferencePoint)
+		background.anchorX = 0
+		background.anchorY = 0
 
 		local searchField = native.newTextField(0, 0, background.width - 70, 40)
 		self.searchField = searchField
-		searchField:setReferencePoint(display.TopLeftReferencePoint)
+		searchField.anchorX = 0
+		searchField.anchorY = 0
 		searchField.hasBackground = false
 		searchField.font = native.newFont(self.FONT_NAME)
 		searchField:addEventListener("userInput", self)
@@ -33,7 +35,8 @@ function SearchInput:new(parentGroup)
 		label.y = 4
 
 		local clear = display.newImage(self, "assets/images/clear-field.png")
-		clear:setReferencePoint(display.TopLeftReferencePoint)
+		clear.anchorX = 0
+		clear.anchorY = 0
 		self.clear = clear
 		function clear:touch(event)
 			if event.phase == "ended" then

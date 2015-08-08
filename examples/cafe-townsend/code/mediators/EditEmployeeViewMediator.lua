@@ -1,5 +1,5 @@
-require "vo.EmployeeVO"
-EditEmployeeViewMediator = {}
+local EmployeeVO = require "vo.EmployeeVO"
+local EditEmployeeViewMediator = {}
 
 function EditEmployeeViewMediator:new()
 	local mediator = {}

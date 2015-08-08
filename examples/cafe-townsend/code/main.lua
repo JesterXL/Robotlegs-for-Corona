@@ -3,7 +3,7 @@ local function startThisMug()
 		display.setStatusBar(display.HiddenStatusBar)
 		_G.stage = display.getCurrentStage()
 
-		require "CafeTownsendApplication"
+		local CafeTownsendApplication = require "CafeTownsendApplication"
 		local app = CafeTownsendApplication:new()
 
 		function showProps(o)

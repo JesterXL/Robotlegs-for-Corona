@@ -1,9 +1,11 @@
 local widget = require "widget"
-EmployeeList = {}
+local EmployeeList = {}
 
 function EmployeeList:new(parentGroup, layoutWidth, layoutHeight)
 
 	local view = display.newGroup()
+	view.anchorX = 0
+	view.anchorY = 0
 	view.employeesHash = {}
 	view.lettersHash = {}
 	view.COLOR_TEXT = {0, 0, 0}
@@ -216,7 +218,8 @@ function EmployeeList:new(parentGroup, layoutWidth, layoutHeight)
 
 	    if employee then
 			local arrow = display.newImage(row, "assets/images/arrow.png")
-			arrow:setReferencePoint(display.TopLeftReferencePoint)
+			arrow.anchorX = 0
+			arrow.anchorY = 0
 			arrow.x = self.layoutWidth - (arrow.width + 8)
 			arrow.y = row.height / 2 - arrow.height / 2
 	    end

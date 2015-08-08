@@ -1,5 +1,5 @@
-require "components.AutoSizeText"
-BackButton = {}
+local AutoSizeText = require "components.AutoSizeText"
+local BackButton = {}
 
 function BackButton:new(parentGroup, layoutWidth, layoutHeight)
 

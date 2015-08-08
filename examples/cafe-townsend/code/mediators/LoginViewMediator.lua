@@ -1,4 +1,4 @@
-LoginViewMediator = {}
+local LoginViewMediator = {}
 
 function LoginViewMediator:new()
 	local mediator = {}

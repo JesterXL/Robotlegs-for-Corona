@@ -1,4 +1,4 @@
-ReadFileContentsService = {}
+local ReadFileContentsService = {}
 
 function ReadFileContentsService:new()
 	local file = {}

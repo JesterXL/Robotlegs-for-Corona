@@ -1,6 +1,6 @@
-require "vo.EmployeeVO"
+local EmployeeVO = require "vo.EmployeeVO"
 
-EmployeesModel = {}
+local EmployeesModel = {}
 
 function EmployeesModel:new()
 	local model = {}

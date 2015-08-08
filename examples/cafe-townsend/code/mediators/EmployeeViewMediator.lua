@@ -1,4 +1,4 @@
-EmployeeViewMediator = {}
+local EmployeeViewMediator = {}
 
 function EmployeeViewMediator:new()
 	local mediator = {}

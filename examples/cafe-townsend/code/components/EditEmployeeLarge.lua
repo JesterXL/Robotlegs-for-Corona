@@ -1,8 +1,8 @@
-require "components.Picture"
-require "components.InputText"
-require "components.AutoSizeText"
+local Picture = require "components.Picture"
+local InputText = require "components.InputText"
+local AutoSizeText = require "components.AutoSizeText"
 
-EditEmployeeLarge = {}
+local EditEmployeeLarge = {}
 
 function EditEmployeeLarge:new(parentGroup)
 

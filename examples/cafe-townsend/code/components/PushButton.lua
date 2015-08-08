@@ -1,5 +1,5 @@
-require "components.AutoSizeText"
-PushButton = {}
+local AutoSizeText = require "components.AutoSizeText"
+local PushButton = {}
 
 function PushButton:new(parentGroup, layoutWidth, layoutHeight)
 
@@ -11,6 +11,8 @@ function PushButton:new(parentGroup, layoutWidth, layoutHeight)
 	end
 
 	local button = display.newGroup()
+	button.anchorX = 0
+	button.anchorY = 0
 	button.layoutWidth = layoutWidth
 	button.layoutHeight = layoutHeight
 
@@ -20,17 +22,20 @@ function PushButton:new(parentGroup, layoutWidth, layoutHeight)
 
 	function button:init()
 		local left =  display.newImage("assets/images/push-button-left.png")
-		left:setReferencePoint(display.TopLeftReferencePoint)
+		left.anchorX = 0
+		left.anchorY = 0
 		self:insert(left)
 		self.left = left
 
 		local center =  display.newImage("assets/images/push-button-center.png")
-		center:setReferencePoint(display.TopLeftReferencePoint)
+		center.anchorX = 0
+		center.anchorY = 0
 		self:insert(center)
 		self.center = center
 
 		local right =  display.newImage("assets/images/push-button-right.png")
-		right:setReferencePoint(display.TopLeftReferencePoint)
+		right.anchorX = 0
+		right.anchorY = 0
 		self:insert(right)
 		self.right = right
 
@@ -59,9 +64,10 @@ function PushButton:new(parentGroup, layoutWidth, layoutHeight)
 		right.x = layoutWidth - right.width
 		right.y = 0
 		-- [jwarden 5.28.2013] What in God's name, guys... seriously...
-		center:setReferencePoint(display.CenterReferencePoint)
+		-- center:setReferencePoint(display.CenterReferencePoint)
 		center.width = layoutWidth - left.width - right.width
-		center:setReferencePoint(display.TopLeftReferencePoint)
+		center.anchorX = 0
+		center.anchorY = 0
 		center.x = left.x + left.width
 		center.y = 0
 

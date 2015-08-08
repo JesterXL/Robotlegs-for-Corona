@@ -1,8 +1,10 @@
-AutoSizeText = {}
+local AutoSizeText = {}
 
 function AutoSizeText:new(parentGroup)
 
 	local view = display.newGroup()
+	view.anchorX = 0
+	view.anchorY = 0
 	parentGroup:insert(view)
 	view._text = nil
 	view._rgba = {255, 255, 255, 255}
@@ -64,8 +66,8 @@ function AutoSizeText:new(parentGroup)
 			newField = display.newText(str, 0, 0, self._width, self._height, fontName, self._fontSize)
 		end
 		
-
-		newField:setReferencePoint(display.TopLeftReferencePoint)
+		newField.anchorX = 0
+		newField.anchorY = 0
 		newField:setTextColor(unpack(self._rgba))
 		self.field = newField
 		self:insert(newField)

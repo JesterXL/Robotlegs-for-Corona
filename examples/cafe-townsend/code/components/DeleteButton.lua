@@ -1,5 +1,5 @@
-require "components.AutoSizeText"
-DeleteButton = {}
+local AutoSizeText = require "components.AutoSizeText"
+local DeleteButton = {}
 
 function DeleteButton:new(parentGroup, layoutWidth, layoutHeight)
 

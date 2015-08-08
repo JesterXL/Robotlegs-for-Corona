@@ -1,4 +1,4 @@
-LoadingViewMediator = {}
+local LoadingViewMediator = {}
 
 function LoadingViewMediator:new()
 	local mediator = {}

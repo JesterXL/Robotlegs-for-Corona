@@ -1,5 +1,5 @@
-require "services.LoginService"
-LoginCommand = {}
+local LoginService = require "services.LoginService"
+local LoginCommand = {}
 
 function LoginCommand:new()
 	local command = {}
