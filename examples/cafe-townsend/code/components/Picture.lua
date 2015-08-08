@@ -12,7 +12,8 @@ function Picture:new(parentGroup)
 	
 	function view:init()
 		local background = display.newImage(self, "assets/images/phone/picture-frame.png")
-		background:setReferencePoint(display.TopLeftReferencePoint)
+		background.anchorX = 0
+		background.anchorY = 0
 		self.background = background
 		function background:touch(event)
 			if event.phase == "ended" then

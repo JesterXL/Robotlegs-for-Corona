@@ -20,11 +20,13 @@ function EmployeeViewLarge:new(parentGroup)
 	function view:init()
 		print("EmployeeViewLarge::init")
 		local header = display.newImage(self, "assets/images/phone/header.png", 0, 0, true)
-		header:setReferencePoint(display.TopLeftReferencePoint)
+		header.anchorX = 0
+		header.anchorY = 0
 		self.header = header
 
 		header.width = display.actualContentWidth
-		header:setReferencePoint(display.TopLeftReferencePoint)
+		header.anchorX = 0
+		header.anchorY = 0
 		header.x = 0
 
 		local headerLabel = AutoSizeText:new(self)

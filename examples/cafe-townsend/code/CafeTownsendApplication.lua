@@ -56,7 +56,8 @@ function CafeTownsendApplication:new()
 		local background = self.background
 		background.width = display.actualContentWidth
 		background.height = display.actualContentHeight
-		background:setReferencePoint(display.TopLeftReferencePoint)
+		background.anchorX = 0
+		background.anchorY = 0
 		background.x = 0
 		background.y = 0
 

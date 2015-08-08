@@ -25,7 +25,8 @@ function EditEmployeeLarge:new(parentGroup)
 		headerLabel:setFont(self.FONT_NAME)
 
 		local form = display.newImage(self, "assets/images/phone/employee-form-background.png")
-		form:setReferencePoint(display.TopLeftReferencePoint)
+		form.anchorX = 0
+		form.anchorY = 0
 		self.form = form
 
 		local firstInput = InputText:new(self, form.width - 8, 30, "First Name")

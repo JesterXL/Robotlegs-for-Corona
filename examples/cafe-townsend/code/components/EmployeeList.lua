@@ -90,6 +90,7 @@ function EmployeeList:new(parentGroup, layoutWidth, layoutHeight)
 		        { 
 		            default = self.HEADER_COLOR,
 		        },
+		        
 				lineColor = lineColor
 			}
 

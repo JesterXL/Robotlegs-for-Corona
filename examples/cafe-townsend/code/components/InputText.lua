@@ -17,7 +17,8 @@ function InputText:new(parentGroup, layoutWidth, layoutHeight, promptText)
 	function view:init()
 		local field = native.newTextField(0, 0, layoutWidth, layoutHeight)
 		self.field = field
-		field:setReferencePoint(display.TopLeftReferencePoint)
+		field.anchorX = 0
+		field.anchorY = 0
 		field.hasBackground = false
 		field.font = self.FONT
 		field.size = 11

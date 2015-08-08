@@ -17,17 +17,20 @@ function HoverMenu:new(parentGroup, buttons)
 		-- end)
 
 		local top =  display.newImage("assets/images/hover-top.png")
-		top:setReferencePoint(display.TopLeftReferencePoint)
+		top.anchorX = 0
+		top.anchorY = 0
 		self:insert(top)
 		self.top = top
 
 		local middle =  display.newImage("assets/images/hover-middle.png")
-		middle:setReferencePoint(display.TopLeftReferencePoint)
+		middle.anchorX = 0
+		middle.anchorY = 0
 		self:insert(middle)
 		self.middle = middle
 
 		local bottom =  display.newImage("assets/images/hover-bottom.png")
-		bottom:setReferencePoint(display.TopLeftReferencePoint)
+		bottom.anchorX = 0
+		bottom.anchorY = 0
 		self:insert(bottom)
 		self.bottom = bottom
 
@@ -45,9 +48,10 @@ function HoverMenu:new(parentGroup, buttons)
 		end
 
 		bottom.y = button.y + button.height - 6
-		middle:setReferencePoint(display.CenterReferencePoint)
+		-- middle:setReferencePoint(display.CenterReferencePoint)
 		middle.height = bottom.y - (top.x + top.height)
-		middle:setReferencePoint(display.TopLeftReferencePoint)
+		middle.anchorX = 0
+		middle.anchorY = 0
 		middle.y = top.x + top.height
 
 		-- background.width = stage.width

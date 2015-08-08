@@ -1,5 +1,5 @@
 local EmployeesModel = require "models.EmployeesModel"
-StartupCommand = {}
+local StartupCommand = {}
 
 function StartupCommand:new()
 	local command = {}

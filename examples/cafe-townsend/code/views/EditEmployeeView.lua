@@ -4,6 +4,7 @@ local InputText = require "components.InputText"
 local DeleteButton = require "components.DeleteButton"
 local BackButton = require "components.BackButton"
 local HoverMenu = require "components.HoverMenu"
+local PushButton = require "components.PushButton"
 
 local EditEmployeeView = {}
 
@@ -20,7 +21,8 @@ function EditEmployeeView:new(parentGroup)
 	function view:init()
 		local header = display.newImage(self, "assets/images/phone/header.png", 0, 0, true)
 		header.width = display.actualContentWidth
-		header:setReferencePoint(display.TopLeftReferencePoint)
+		header.anchorX = 0
+		header.anchorY = 0
 		header.x = 0
 		self.header = header
 
@@ -36,7 +38,8 @@ function EditEmployeeView:new(parentGroup)
 		picture:addEventListener("onAddTouched", self)
 
 		local form = display.newImage(self, "assets/images/phone/employee-form-background.png")
-		form:setReferencePoint(display.TopLeftReferencePoint)
+		form.anchorX = 0
+		form.anchorY = 0
 		self.form = form
 
 		local totalWidth = picture.width + 16 + form.width
